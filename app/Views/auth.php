@@ -71,6 +71,11 @@
 <body>
 
   <div class="login-container">
+    <?php if (session()->getFlashdata('error')): ?>
+      <div style="color: red; text-align: center; margin-bottom: 10px;">
+        <?= session()->getFlashdata('error'); ?>
+      </div>
+    <?php endif; ?>
     <h2>Login</h2>
     <form action="/login" method="post">
       <label for="username">Username</label>

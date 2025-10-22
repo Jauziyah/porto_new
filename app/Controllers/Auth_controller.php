@@ -10,6 +10,32 @@ class Auth_controller extends Controller{
     {
         return view('auth');
     }
+
+    public function login()
+    {
+        $session = session();
+        $userModel = new UserModel();
+        $username = $this->request->getPost('username');
+        $password = $this->request->getPost('password');
+        $user = $userModel->getUserByUsername($username);
+        if ($user && $user['password'] === $password) { // Plaintext comparison for simplicity
+            $session->set('isLoggedIn', true);
+            $session->set('username', $user['username']);
+            return redirect()->to('/dashboard');
+        } else {
+            $session->setFlashdata('error', 'Invalid username or password');
+            return redirect()->to('/auth');
+        }
+    }
+
+    public function dashboard()
+    {
+        $session = session();
+        if (! $session->get('isLoggedIn')) {
+            return redirect()->to('/auth');
+        }
+        return view('dashboard');
+    }
 }
 
 ?>
