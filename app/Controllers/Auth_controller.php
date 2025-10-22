@@ -21,7 +21,7 @@ class Auth_controller extends Controller{
         if ($user && $user['password'] === $password) { // Plaintext comparison for simplicity
             $session->set('isLoggedIn', true);
             $session->set('username', $user['username']);
-            return redirect()->to('/dashboard');
+            return redirect()->to('/content-management');
         } else {
             $session->setFlashdata('error', 'Invalid username or password');
             return redirect()->to('/auth');
@@ -35,6 +35,22 @@ class Auth_controller extends Controller{
             return redirect()->to('/auth');
         }
         return view('dashboard');
+    }
+
+    public function contentManagement()
+    {
+        $session = session();
+        if (! $session->get('isLoggedIn')) {
+            return redirect()->to('/auth');
+        }
+        return view('pages/content_management');
+    }
+
+    public function logout()
+    {
+        $session = session();
+        $session->destroy();
+        return redirect()->to('/auth');
     }
 }
 
