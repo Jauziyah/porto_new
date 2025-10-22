@@ -7,3 +7,6 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 $routes->get('/users', 'UserController::index');
+
+
+$routes->get('/jashfjldkahsjkvbfsuifgywf692938f8dsldjds', 'Auth_controller::index');
