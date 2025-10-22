@@ -22,10 +22,21 @@
       width: 250px;
       padding-top: 1rem;
       transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      z-index: 1000;
     }
 
     .sidebar.collapsed {
       width: 80px;
+    }
+
+    .sidebar.collapsed .nav-link span {
+      display: none;
+    }
+
+    .sidebar.collapsed .brand span:first-child {
+      display: none;
     }
 
     .sidebar .nav-link {
@@ -36,6 +47,8 @@
       padding: 10px 20px;
       font-weight: 500;
       transition: all 0.2s ease;
+      text-decoration: none;
+      white-space: nowrap;
     }
 
     .sidebar .nav-link:hover {
@@ -46,6 +59,7 @@
 
     .sidebar .nav-link.active {
       color: #e91e63;
+      background-color: rgba(233, 30, 99, 0.1);
     }
 
     .sidebar .brand {
@@ -56,6 +70,22 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      white-space: nowrap;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav-top {
+      flex: 1;
+    }
+
+    .nav-bottom {
+      margin-top: auto;
+      padding-bottom: 2rem;
     }
 
     .content {
@@ -75,6 +105,7 @@
       border: none;
       color: #e91e63;
       font-size: 1.5rem;
+      cursor: pointer;
     }
 
     .card {
@@ -89,23 +120,77 @@
 <body>
   <div class="sidebar" id="sidebar">
     <div class="brand d-flex align-items-center justify-content-between">
-      <span><i class="bi bi-list"></i> Admin Dude</span>
+      <span><i class="bi bi-speedometer2"></i> Admin Dude</span>
       <button id="toggleBtn" class="btn-toggle"><i class="bi bi-list"></i></button>
     </div>
 
-    <nav class="nav flex-column mt-4">
-      <a href="#" class="nav-link active"><i class="bi bi-house"></i> Dashboard</a>
-      <a href="#" class="nav-link"><i class="bi bi-people"></i> Users</a>
-      <a href="#" class="nav-link"><i class="bi bi-gear"></i> Settings</a>
-      <a href="/logout" class="nav-link"><i class="bi bi-box-arrow-right"></i> Logout</a>
-    </nav>
+    <div class="sidebar-nav">
+      <nav class="nav flex-column nav-top">
+        <a href="/content-management" class="nav-link" data-page="content-management">
+          <i class="bi bi-file-earmark-text"></i>
+          <span>Content Management</span>
+        </a>
+        <a href="/profile" class="nav-link" data-page="profile">
+          <i class="bi bi-person"></i>
+          <span>Profile</span>
+        </a>
+        <a href="/settings" class="nav-link" data-page="settings">
+          <i class="bi bi-gear"></i>
+          <span>Setting</span>
+        </a>
+      </nav>
+      
+      <nav class="nav flex-column nav-bottom">
+        <a href="/logout" class="nav-link" data-page="logout">
+          <i class="bi bi-box-arrow-right"></i>
+          <span>Logout</span>
+        </a>
+      </nav>
+    </div>
+  </div>
+  
+  <!-- Fixed: Content properly wrapped -->
+  <div class="content">
+    <?= $this->renderSection('content') ?>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.js"></script>
   <script>
-    document.getElementById('toggleBtn').addEventListener('click', function() {
-      document.getElementById('sidebar').classList.toggle('collapsed');
-      document.querySelector('.content').classList.toggle('collapsed');
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggleBtn = document.getElementById('toggleBtn');
+      const sidebar = document.getElementById('sidebar');
+      const content = document.querySelector('.content');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      // Toggle sidebar
+      toggleBtn.addEventListener('click', function() {
+        sidebar.classList.toggle('collapsed');
+        content.classList.toggle('collapsed');
+      });
+
+      // Set active nav link based on current URL
+      function setActiveNav() {
+        const currentPath = window.location.pathname;
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === currentPath) {
+            link.classList.add('active');
+          }
+        });
+      }
+
+      // Set active nav on page load
+      setActiveNav();
+
+      // Add click event to nav links
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          // Remove active class from all links
+          navLinks.forEach(l => l.classList.remove('active'));
+          // Add active class to clicked link
+          this.classList.add('active');
+        });
+      });
     });
   </script>
 </body>

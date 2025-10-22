@@ -28,15 +28,6 @@ class Auth_controller extends Controller{
         }
     }
 
-    public function dashboard()
-    {
-        $session = session();
-        if (! $session->get('isLoggedIn')) {
-            return redirect()->to('/auth');
-        }
-        return view('dashboard');
-    }
-
     public function contentManagement()
     {
         $session = session();
@@ -44,6 +35,24 @@ class Auth_controller extends Controller{
             return redirect()->to('/auth');
         }
         return view('pages/content_management');
+    }
+
+    public function profile()
+    {
+        $session = session();
+        if (! $session->get('isLoggedIn')) {
+            return redirect()->to('/auth');
+        }
+        return view('pages/profile');
+    }
+
+    public function settings()
+    {
+        $session = session();
+        if (! $session->get('isLoggedIn')) {
+            return redirect()->to('/auth');
+        }
+        return view('pages/settings');
     }
 
     public function logout()

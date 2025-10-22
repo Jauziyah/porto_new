@@ -86,10 +86,6 @@
 
       <button type="submit">Sign In</button>
     </form>
-    <div class="footer-text">
-      Forgot your password? <a href="#">Reset it</a>
-    </div>
   </div>
-
 </body>
 </html>

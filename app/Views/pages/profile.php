@@ -1,6 +1,6 @@
 <?= $this->extend('layout/template') ?>
 
 <?= $this->section('content') ?>
-<h1>Content Management</h1>
-<p>Manage your content here.</p>
+<h1>User Profile</h1>
+<p>Welcome to your profile page.</p>
 <?= $this->endSection() ?>
