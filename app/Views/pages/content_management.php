@@ -15,38 +15,81 @@
   <!-- Project Container -->
   <div class="card custom-container-card rounded-4 p-3 border border-secondary">
     <div class="row g-3">
-      <!-- 1st Dummy Card -->
-      <div class="col-md-4">
-        <div class="card project-card text-light rounded-4 overflow-hidden shadow">
-          <!-- Placeholder "image" -->
-          <div class="position-relative placeholder-box">
-            <div class="position-absolute top-50 start-50 translate-middle text-white fw-semibold opacity-75">
-              PLACEHOLDER
+      <?php if (!empty($projects)): ?>
+        <?php foreach ($projects as $proj): ?>
+          <div class="col-md-4">
+            <div class="card project-card text-light rounded-4 overflow-hidden shadow">
+              <div class="position-relative placeholder-box">
+                <?php $imgs = $proj['images'] ?? []; $hasImages = !empty($imgs); $carouselId = 'projCarousel' . (int)$proj['id']; ?>
+                <?php if ($hasImages): ?>
+                  <div id="<?= $carouselId ?>" class="carousel slide h-100" data-bs-ride="carousel">
+                    <div class="carousel-inner h-100">
+                      <?php foreach ($imgs as $idx => $img): ?>
+                        <div class="carousel-item <?= $idx === 0 ? 'active' : '' ?> h-100">
+                          <img src="<?= base_url('upload/project/' . ($img['id_or_url'] ?? '')) ?>"
+                               class="d-block w-100"
+                               alt="<?= htmlspecialchars($img['name_or_alt'] ?? 'Project image') ?>"
+                               style="height:100%; object-fit:cover;" />
+                        </div>
+                      <?php endforeach; ?>
+                    </div>
+                    <?php if (count($imgs) > 1): ?>
+                      <button class="carousel-control-prev" type="button" data-bs-target="#<?= $carouselId ?>" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#<?= $carouselId ?>" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                    <?php endif; ?>
+                  </div>
+                <?php else: ?>
+                  <div class="position-absolute top-50 start-50 translate-middle text-white fw-semibold opacity-75">NO IMAGE</div>
+                <?php endif; ?>
+                <?php if ((int)($proj['published'] ?? 0) !== 1): ?>
+                  <span class="badge bg-danger position-absolute top-0 start-0 m-2 rounded-pill px-2 py-1">Draft</span>
+                <?php endif; ?>
+                <?php if ((int)($proj['featured'] ?? 0) === 1): ?>
+                  <span class="badge bg-warning text-dark position-absolute top-0 end-0 m-2 rounded-pill px-2 py-1">Featured</span>
+                <?php endif; ?>
+              </div>
+
+              <div class="card-body">
+                <h5 class="card-title mb-1" style="color: #AC274F;"><?= htmlspecialchars($proj['title'] ?? '') ?></h5>
+                <p class="card-text text-white-50 small mb-3"><?= htmlspecialchars($proj['description'] ?? '') ?></p>
+
+                <div class="d-flex justify-content-between text-white small mb-3">
+                  <span><i class="bi bi-calendar"></i> <?= htmlspecialchars($proj['created_at'] ?? '') ?></span>
+                  <span><i class="bi bi-arrow-repeat"></i> <?= htmlspecialchars($proj['updated_at'] ?? '') ?></span>
+                </div>
+
+                <div class="d-flex gap-2">
+                  <button class="btn btn-sm btn-primary w-50 btn-edit-project" data-bs-toggle="modal" data-bs-target="#editProjectModal"
+                          data-id="<?= (int)$proj['id'] ?>"
+                          data-title='<?= htmlspecialchars($proj['title'] ?? '', ENT_QUOTES) ?>'
+                          data-description='<?= htmlspecialchars($proj['description'] ?? '', ENT_QUOTES) ?>'
+                          data-demo='<?= htmlspecialchars($proj['demo_link'] ?? '', ENT_QUOTES) ?>'
+                          data-github='<?= htmlspecialchars($proj['github_link'] ?? '', ENT_QUOTES) ?>'
+                          data-featured="<?= (int)($proj['featured'] ?? 0) ?>"
+                          data-published="<?= (int)($proj['published'] ?? 0) ?>"
+                          data-categories='<?= json_encode(array_map(function($c){return $c['id_or_url'];}, $proj['categories'] ?? [])) ?>'
+                          data-tags='<?= json_encode(array_map(function($t){return $t['id_or_url'];}, $proj['tags'] ?? [])) ?>'>
+                    <i class="bi bi-pencil"></i> Edit
+                  </button>
+                  <form action="<?= site_url('/projects/' . (int)$proj['id'] . '/delete') ?>" method="post" class="w-50">
+                    <button class="btn btn-sm btn-danger w-100 btn-delete"><i class="bi bi-trash"></i> Delete</button>
+                  </form>
+                </div>
+              </div>
             </div>
-            <span class="badge bg-danger position-absolute top-0 start-0 m-2 rounded-pill px-2 py-1">Draft</span>
-            <span class="badge bg-warning text-dark position-absolute top-0 end-0 m-2 rounded-pill px-2 py-1">Featured</span>
           </div>
-
-          <div class="card-body">
-            <h5 class="card-title mb-1" style="color: #AC274F;">Etwas</h5>
-            <p class="card-text text-white-50 small mb-3">Sample description text.</p>
-
-            <div class="d-flex justify-content-between text-white small mb-3">
-              <span><i class="bi bi-calendar"></i> Oct 13, 2025</span>
-              <span><i class="bi bi-arrow-repeat"></i> Oct 13, 2025</span>
-            </div>
-
-            <div class="d-flex gap-2">
-              <button class="btn btn-sm btn-primary w-50" data-bs-toggle="modal" data-bs-target="#editProjectModal"><i class="bi bi-pencil"></i> Edit</button>
-              <button class="btn btn-sm btn-danger w-50"><i class="bi bi-trash"></i> Delete</button>
-            </div>
-          </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <div class="col-12 d-flex align-items-center justify-content-center text-muted" style="min-height: 300px;">
+          No projects yet.
         </div>
-      </div>
-
-      <!-- Empty layout placeholder -->
-      <div class="col-md-8 d-flex align-items-center justify-content-center text-muted" style="min-height: 300px;">
-      </div>
+      <?php endif; ?>
     </div>
   </div>
 </div>
@@ -60,75 +103,51 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body custom-modal-body">
-        <form id="addProjectForm">
+        <form id="addProjectForm" method="post" action="<?= site_url('/projects') ?>" enctype="multipart/form-data">
           <div class="mb-3">
             <label for="projectTitle" class="form-label text-light">Project Title</label>
-            <input type="text" class="form-control custom-input" id="projectTitle" placeholder="Enter project title">
+            <input type="text" class="form-control custom-input" id="projectTitle" name="title" placeholder="Enter project title" required>
           </div>
           
           <div class="mb-3">
             <label for="projectDescription" class="form-label text-light">Project Description</label>
-            <textarea class="form-control custom-textarea" id="projectDescription" rows="5" placeholder="Enter project description"></textarea>
+            <textarea class="form-control custom-textarea" id="projectDescription" name="description" rows="5" placeholder="Enter project description"></textarea>
           </div>
           
           <div class="row mb-3">
             <div class="col-md-6">
               <label class="form-label text-light">Categories</label>
               <div class="custom-checkbox-container">
-                <div class="form-check">
-                  <input class="form-check-input custom-checkbox" type="checkbox" value="" id="category1">
-                  <label class="form-check-label text-light" for="category1">
-                    Web Development
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input custom-checkbox" type="checkbox" value="" id="category2">
-                  <label class="form-check-label text-light" for="category2">
-                    Mobile App
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input custom-checkbox" type="checkbox" value="" id="category3">
-                  <label class="form-check-label text-light" for="category3">
-                    UI/UX Design
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input custom-checkbox" type="checkbox" value="" id="category4">
-                  <label class="form-check-label text-light" for="category4">
-                    E-commerce
-                  </label>
-                </div>
+                <?php if (!empty($categories)): ?>
+                  <?php foreach ($categories as $cat): ?>
+                    <div class="form-check">
+                      <input class="form-check-input custom-checkbox" type="checkbox" value="<?= (int)$cat['id'] ?>" name="category_ids[]" id="category<?= (int)$cat['id'] ?>">
+                      <label class="form-check-label text-light" for="category<?= (int)$cat['id'] ?>">
+                        <?= htmlspecialchars($cat['name']) ?>
+                      </label>
+                    </div>
+                  <?php endforeach; ?>
+                <?php else: ?>
+                  <div class="text-white-50 small">No categories found.</div>
+                <?php endif; ?>
               </div>
             </div>
             
             <div class="col-md-6">
               <label class="form-label text-light">Tags</label>
               <div class="custom-checkbox-container">
-                <div class="form-check">
-                  <input class="form-check-input custom-checkbox" type="checkbox" value="" id="tag1">
-                  <label class="form-check-label text-light" for="tag1">
-                    JavaScript
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input custom-checkbox" type="checkbox" value="" id="tag2">
-                  <label class="form-check-label text-light" for="tag2">
-                    React
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input custom-checkbox" type="checkbox" value="" id="tag3">
-                  <label class="form-check-label text-light" for="tag3">
-                    Bootstrap
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input custom-checkbox" type="checkbox" value="" id="tag4">
-                  <label class="form-check-label text-light" for="tag4">
-                    API Integration
-                  </label>
-                </div>
+                <?php if (!empty($tags)): ?>
+                  <?php foreach ($tags as $tag): ?>
+                    <div class="form-check">
+                      <input class="form-check-input custom-checkbox" type="checkbox" value="<?= (int)$tag['id'] ?>" name="tag_ids[]" id="tag<?= (int)$tag['id'] ?>">
+                      <label class="form-check-label text-light" for="tag<?= (int)$tag['id'] ?>">
+                        <?= htmlspecialchars($tag['name']) ?>
+                      </label>
+                    </div>
+                  <?php endforeach; ?>
+                <?php else: ?>
+                  <div class="text-white-50 small">No tags found.</div>
+                <?php endif; ?>
               </div>
             </div>
           </div>
@@ -136,16 +155,14 @@
           <div class="row mb-3">
             <div class="col-md-6">
               <label for="projectStatus" class="form-label text-light">Status</label>
-              <select class="form-select custom-select" id="projectStatus">
-                <option selected>Select status</option>
-                <option value="draft">Draft</option>
-                <option value="published">Published</option>
-                <option value="archived">Archived</option>
+              <select class="form-select custom-select" id="projectStatus" name="published">
+                <option value="0">Draft</option>
+                <option value="1">Published</option>
               </select>
             </div>
             <div class="col-md-6">
               <div class="form-check mt-4 pt-2">
-                <input class="form-check-input custom-checkbox" type="checkbox" id="featuredProject">
+                <input class="form-check-input custom-checkbox" type="checkbox" id="featuredProject" name="featured" value="1">
                 <label class="form-check-label text-light" for="featuredProject">
                   Featured Project
                 </label>
@@ -154,14 +171,14 @@
           </div>
           
           <div class="mb-3">
-            <label for="projectImage" class="form-label text-light">Project Image</label>
-            <input class="form-control custom-input" type="file" id="projectImage">
+            <label for="projectImage" class="form-label text-light">Project Images</label>
+            <input class="form-control custom-input" type="file" id="projectImage" name="images[]" multiple>
           </div>
         </form>
       </div>
       <div class="modal-footer custom-modal-footer border-0">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary">Save Project</button>
+        <button type="submit" form="addProjectForm" class="btn btn-primary">Save Project</button>
       </div>
     </div>
   </div>
@@ -176,75 +193,51 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body custom-modal-body">
-        <form id="editProjectForm">
+        <form id="editProjectForm" method="post" action="#" enctype="multipart/form-data">
           <div class="mb-3">
             <label for="editProjectTitle" class="form-label text-light">Project Title</label>
-            <input type="text" class="form-control custom-input" id="editProjectTitle" value="Etwas">
+            <input type="text" class="form-control custom-input" id="editProjectTitle" name="title">
           </div>
           
           <div class="mb-3">
             <label for="editProjectDescription" class="form-label text-light">Project Description</label>
-            <textarea class="form-control custom-textarea" id="editProjectDescription" rows="5">Sample description text.</textarea>
+            <textarea class="form-control custom-textarea" id="editProjectDescription" name="description" rows="5"></textarea>
           </div>
           
           <div class="row mb-3">
             <div class="col-md-6">
               <label class="form-label text-light">Categories</label>
               <div class="custom-checkbox-container">
-                <div class="form-check">
-                  <input class="form-check-input custom-checkbox" type="checkbox" value="" id="editCategory1" checked>
-                  <label class="form-check-label text-light" for="editCategory1">
-                    Web Development
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input custom-checkbox" type="checkbox" value="" id="editCategory2">
-                  <label class="form-check-label text-light" for="editCategory2">
-                    Mobile App
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input custom-checkbox" type="checkbox" value="" id="editCategory3">
-                  <label class="form-check-label text-light" for="editCategory3">
-                    UI/UX Design
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input custom-checkbox" type="checkbox" value="" id="editCategory4">
-                  <label class="form-check-label text-light" for="editCategory4">
-                    E-commerce
-                  </label>
-                </div>
+                <?php if (!empty($categories)): ?>
+                  <?php foreach ($categories as $cat): ?>
+                    <div class="form-check">
+                      <input class="form-check-input custom-checkbox edit-category" type="checkbox" value="<?= (int)$cat['id'] ?>" name="category_ids[]" id="editCategory<?= (int)$cat['id'] ?>">
+                      <label class="form-check-label text-light" for="editCategory<?= (int)$cat['id'] ?>">
+                        <?= htmlspecialchars($cat['name']) ?>
+                      </label>
+                    </div>
+                  <?php endforeach; ?>
+                <?php else: ?>
+                  <div class="text-white-50 small">No categories found.</div>
+                <?php endif; ?>
               </div>
             </div>
             
             <div class="col-md-6">
               <label class="form-label text-light">Tags</label>
               <div class="custom-checkbox-container">
-                <div class="form-check">
-                  <input class="form-check-input custom-checkbox" type="checkbox" value="" id="editTag1" checked>
-                  <label class="form-check-label text-light" for="editTag1">
-                    JavaScript
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input custom-checkbox" type="checkbox" value="" id="editTag2">
-                  <label class="form-check-label text-light" for="editTag2">
-                    React
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input custom-checkbox" type="checkbox" value="" id="editTag3" checked>
-                  <label class="form-check-label text-light" for="editTag3">
-                    Bootstrap
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input custom-checkbox" type="checkbox" value="" id="editTag4">
-                  <label class="form-check-label text-light" for="editTag4">
-                    API Integration
-                  </label>
-                </div>
+                <?php if (!empty($tags)): ?>
+                  <?php foreach ($tags as $tag): ?>
+                    <div class="form-check">
+                      <input class="form-check-input custom-checkbox edit-tag" type="checkbox" value="<?= (int)$tag['id'] ?>" name="tag_ids[]" id="editTag<?= (int)$tag['id'] ?>">
+                      <label class="form-check-label text-light" for="editTag<?= (int)$tag['id'] ?>">
+                        <?= htmlspecialchars($tag['name']) ?>
+                      </label>
+                    </div>
+                  <?php endforeach; ?>
+                <?php else: ?>
+                  <div class="text-white-50 small">No tags found.</div>
+                <?php endif; ?>
               </div>
             </div>
           </div>
@@ -252,15 +245,14 @@
           <div class="row mb-3">
             <div class="col-md-6">
               <label for="editProjectStatus" class="form-label text-light">Status</label>
-              <select class="form-select custom-select" id="editProjectStatus">
-                <option value="draft" selected>Draft</option>
-                <option value="published">Published</option>
-                <option value="archived">Archived</option>
+              <select class="form-select custom-select" id="editProjectStatus" name="published">
+                <option value="0">Draft</option>
+                <option value="1">Published</option>
               </select>
             </div>
             <div class="col-md-6">
               <div class="form-check mt-4 pt-2">
-                <input class="form-check-input custom-checkbox" type="checkbox" id="editFeaturedProject" checked>
+                <input class="form-check-input custom-checkbox" type="checkbox" id="editFeaturedProject" name="featured" value="1">
                 <label class="form-check-label text-light" for="editFeaturedProject">
                   Featured Project
                 </label>
@@ -270,17 +262,91 @@
           
           <div class="mb-3">
             <label for="editProjectImage" class="form-label text-light">Project Image</label>
-            <input class="form-control custom-input" type="file" id="editProjectImage">
+            <input class="form-control custom-input" type="file" id="editProjectImage" name="images[]" multiple>
           </div>
         </form>
       </div>
       <div class="modal-footer custom-modal-footer border-0">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary">Update Project</button>
+        <button type="submit" form="editProjectForm" class="btn btn-primary">Update Project</button>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Delete confirmation
+    document.querySelectorAll('.btn-delete').forEach(btn => {
+      btn.addEventListener('click', function(e){
+        if(!confirm('Delete this project? This cannot be undone.')){
+          e.preventDefault();
+        }
+      });
+    });
+
+    // Populate Edit Project modal
+    document.querySelectorAll('.btn-edit-project').forEach(btn => {
+      btn.addEventListener('click', function(){
+        const id = this.getAttribute('data-id');
+        const title = this.getAttribute('data-title') || '';
+        const description = this.getAttribute('data-description') || '';
+        const demo = this.getAttribute('data-demo') || '';
+        const github = this.getAttribute('data-github') || '';
+        const featured = parseInt(this.getAttribute('data-featured') || '0');
+        const published = parseInt(this.getAttribute('data-published') || '0');
+        const categories = JSON.parse(this.getAttribute('data-categories') || '[]');
+        const tags = JSON.parse(this.getAttribute('data-tags') || '[]');
+
+        document.getElementById('editProjectTitle').value = title;
+        document.getElementById('editProjectDescription').value = description;
+        document.getElementById('editProjectStatus').value = published;
+        document.getElementById('editFeaturedProject').checked = featured === 1;
+
+        // Optional links
+        // Create or ensure inputs exist
+        let demoInput = document.getElementById('editProjectDemo');
+        if (!demoInput) {
+          demoInput = document.createElement('input');
+          demoInput.type = 'url';
+          demoInput.className = 'form-control custom-input mt-2';
+          demoInput.id = 'editProjectDemo';
+          demoInput.name = 'demo_link';
+          document.getElementById('editProjectForm').insertBefore(demoInput, document.getElementById('editProjectForm').firstChild.nextSibling.nextSibling);
+        }
+        demoInput.placeholder = 'Demo link (optional)';
+        demoInput.value = demo;
+
+        let ghInput = document.getElementById('editProjectGithub');
+        if (!ghInput) {
+          ghInput = document.createElement('input');
+          ghInput.type = 'url';
+          ghInput.className = 'form-control custom-input mt-2';
+          ghInput.id = 'editProjectGithub';
+          ghInput.name = 'github_link';
+          document.getElementById('editProjectForm').insertBefore(ghInput, document.getElementById('editProjectForm').firstChild.nextSibling.nextSibling);
+        }
+        ghInput.placeholder = 'GitHub link (optional)';
+        ghInput.value = github;
+
+        // Clear checks then re-check
+        document.querySelectorAll('.edit-category').forEach(cb => cb.checked = false);
+        categories.forEach(cid => {
+          const cb = document.getElementById('editCategory' + cid);
+          if (cb) cb.checked = true;
+        });
+        document.querySelectorAll('.edit-tag').forEach(cb => cb.checked = false);
+        tags.forEach(tid => {
+          const cb = document.getElementById('editTag' + tid);
+          if (cb) cb.checked = true;
+        });
+
+        // Set form action
+        document.getElementById('editProjectForm').setAttribute('action', `<?= site_url('/projects') ?>/${id}`);
+      });
+    });
+  });
+</script>
 
 <style>
   body {

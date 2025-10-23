@@ -10,14 +10,13 @@ $routes->get('/', 'Home::index');
 
 // Showing pages
 $routes->get('/auth', 'Auth_controller::index');
-$routes->get('/content-management', 'Auth_controller::contentManagement');
+$routes->get('/content-management', 'Project_controller::page');
 $routes->get('/profile', 'Profile_controller::index');
 $routes->get('/settings', 'Setting_controller::page');
 
 // endpoint for authentication
 $routes->post('/login', 'Auth_controller::login');
 $routes->get('/logout', 'Auth_controller::logout');
-
 
 // Profile Management (alias)
 $routes->get('/profile/manage', 'Profile_controller::index');
@@ -58,6 +57,10 @@ $routes->post('/settings/skills', 'Setting_controller::storeSkill');
 $routes->post('/settings/skills/(:num)', 'Setting_controller::updateSkill/$1');
 $routes->post('/settings/skills/(:num)/delete', 'Setting_controller::deleteSkill/$1');
 
+// Project CRUD
+$routes->post('/projects', 'Project_controller::store');
+$routes->post('/projects/(:num)', 'Project_controller::update/$1');
+$routes->post('/projects/(:num)/delete', 'Project_controller::delete/$1');
 
 $routes->group('projects-test', function($routes) {
     $routes->get('/', 'Project_controller::index');
