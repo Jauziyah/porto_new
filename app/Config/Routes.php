@@ -11,7 +11,7 @@ $routes->get('/', 'Home::index');
 // Showing pages
 $routes->get('/auth', 'Auth_controller::index');
 $routes->get('/content-management', 'Auth_controller::contentManagement');
-$routes->get('/profile', 'Auth_controller::profile');
+$routes->get('/profile', 'Profile_controller::index');
 $routes->get('/settings', 'Auth_controller::settings');
 
 // endpoint for authentication
@@ -19,8 +19,7 @@ $routes->post('/login', 'Auth_controller::login');
 $routes->get('/logout', 'Auth_controller::logout');
 
 
-// Profile Management
-// Data listing page backed by Profile_controller
+// Profile Management (alias)
 $routes->get('/profile/manage', 'Profile_controller::index');
 
 // Categories CRUD

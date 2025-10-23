@@ -9,6 +9,11 @@ class Profile_controller extends Controller
 {
     public function index()
     {
+        $session = session();
+        if (!$session->get('isLoggedIn')) {
+            return redirect()->to('/auth');
+        }
+
         $model = new Profile_model();
         $data = $model->getProfileData();
         return view('pages/profile', $data);
