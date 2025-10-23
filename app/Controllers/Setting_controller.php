@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Models\Setting_model;
 use CodeIgniter\RESTful\ResourceController;
 
-class Setting_controller extends ResourceController
+class Setting_controller extends BaseController
 {
     protected $modelName = 'App\Models\Setting_model';
     protected $format = 'json';
@@ -35,13 +35,32 @@ class Setting_controller extends ResourceController
         return $this->respond($user);
     }
 
+    // PUBLIC API METHODS FOR PORTFOLIO
+// PUBLIC API METHODS FOR PORTFOLIO
+public function getWhatIDo()
+{
+    $model = new Setting_model();
+    $data = $model->getWhatIDoData(); // This method now exists
+    return $this->respond($data);
+}
+
+public function getSocialLinks()
+{
+    $model = new Setting_model();
+    $data = $model->getSocialLinksData(); // This method now exists
+    return $this->respond($data);
+}
+
+public function getSkills()
+{
+    $model = new Setting_model();
+    $data = $model->getSkillsData(); // This method now exists
+    return $this->respond($data);
+}
+
     public function page($id = 1)
     {
-        $session = session();
-        if (!$session->get('isLoggedIn')) {
-            return redirect()->to('/auth');
-        }
-
+        // Authentication removed - filter will handle it
         $model = new Setting_model();
         $user = $model->getUserData($id);
 
@@ -122,11 +141,7 @@ class Setting_controller extends ResourceController
     // --- CRUD: User basics --- //
     public function updateUserBasics()
     {
-        $session = session();
-        if (!$session->get('isLoggedIn')) {
-            return redirect()->to('/auth');
-        }
-
+        // Authentication removed - filter will handle it
         $userId = 1; // current single-user assumption
         $db = \Config\Database::connect();
 
@@ -159,7 +174,7 @@ class Setting_controller extends ResourceController
     // --- CRUD: What I Do --- //
     public function storeWhatIDo()
     {
-        $this->ensureAuth();
+        // Authentication removed - filter will handle it
         $db = \Config\Database::connect();
         $userId = 1;
 
@@ -180,7 +195,7 @@ class Setting_controller extends ResourceController
 
     public function updateWhatIDo($id)
     {
-        $this->ensureAuth();
+        // Authentication removed - filter will handle it
         $db = \Config\Database::connect();
         $row = $db->table('user_what_i_do')->where('id', (int)$id)->get()->getRowArray();
         if (!$row) return redirect()->back()->with('error', 'Item not found');
@@ -205,7 +220,7 @@ class Setting_controller extends ResourceController
 
     public function deleteWhatIDo($id)
     {
-        $this->ensureAuth();
+        // Authentication removed - filter will handle it
         $db = \Config\Database::connect();
         $row = $db->table('user_what_i_do')->where('id', (int)$id)->get()->getRowArray();
         if ($row) {
@@ -218,7 +233,7 @@ class Setting_controller extends ResourceController
     // --- CRUD: Social Links --- //
     public function storeSocialLink()
     {
-        $this->ensureAuth();
+        // Authentication removed - filter will handle it
         $db = \Config\Database::connect();
         $userId = 1;
         $platform = trim((string)$this->request->getPost('platform'));
@@ -236,7 +251,7 @@ class Setting_controller extends ResourceController
 
     public function updateSocialLink($id)
     {
-        $this->ensureAuth();
+        // Authentication removed - filter will handle it
         $db = \Config\Database::connect();
         $row = $db->table('user_social_links')->where('id', (int)$id)->get()->getRowArray();
         if (!$row) return redirect()->back()->with('error', 'Item not found');
@@ -259,7 +274,7 @@ class Setting_controller extends ResourceController
 
     public function deleteSocialLink($id)
     {
-        $this->ensureAuth();
+        // Authentication removed - filter will handle it
         $db = \Config\Database::connect();
         $row = $db->table('user_social_links')->where('id', (int)$id)->get()->getRowArray();
         if ($row) {
@@ -272,7 +287,7 @@ class Setting_controller extends ResourceController
     // --- CRUD: Skills --- //
     public function storeSkill()
     {
-        $this->ensureAuth();
+        // Authentication removed - filter will handle it
         $db = \Config\Database::connect();
         $userId = 1;
         $name = trim((string)$this->request->getPost('name'));
@@ -288,7 +303,7 @@ class Setting_controller extends ResourceController
 
     public function updateSkill($id)
     {
-        $this->ensureAuth();
+        // Authentication removed - filter will handle it
         $db = \Config\Database::connect();
         $row = $db->table('user_skills')->where('id', (int)$id)->get()->getRowArray();
         if (!$row) return redirect()->back()->with('error', 'Item not found');
@@ -309,7 +324,7 @@ class Setting_controller extends ResourceController
 
     public function deleteSkill($id)
     {
-        $this->ensureAuth();
+        // Authentication removed - filter will handle it
         $db = \Config\Database::connect();
         $row = $db->table('user_skills')->where('id', (int)$id)->get()->getRowArray();
         if ($row) {
@@ -319,16 +334,7 @@ class Setting_controller extends ResourceController
         return redirect()->to('/settings');
     }
 
-    // --- Helpers: auth and uploads --- //
-    private function ensureAuth(): void
-    {
-        $session = session();
-        if (!$session->get('isLoggedIn')) {
-            redirect()->to('/auth')->send();
-            exit;
-        }
-    }
-
+    // --- Helpers: uploads --- //
     private function handleUpload(string $field): ?string
     {
         $file = $this->request->getFile($field);

@@ -33,13 +33,17 @@ class Project_controller extends BaseController
         return $this->respond($project);
     }
 
+    // PUBLIC API METHOD FOR PORTFOLIO
+    public function getProjects()
+    {
+        $model = new Project_model();
+        $projects = $model->getProjects();
+        return $this->respond($projects);
+    }
+
     public function page()
     {
-        $session = session();
-        if (!$session->get('isLoggedIn')) {
-            return redirect()->to('/auth');
-        }
-
+        // Authentication removed - filter will handle it
         $model = new Project_model();
         $rows = $model->getProjects();
         $projects = [];
@@ -63,7 +67,7 @@ class Project_controller extends BaseController
 
     public function store()
     {
-        $this->ensureAuth();
+        // Authentication removed - filter will handle it
         helper('url');
         $db = \Config\Database::connect();
 
@@ -100,7 +104,7 @@ class Project_controller extends BaseController
 
     public function update($id)
     {
-        $this->ensureAuth();
+        // Authentication removed - filter will handle it
         helper('url');
         $db = \Config\Database::connect();
         $id = (int)$id;
@@ -140,7 +144,7 @@ class Project_controller extends BaseController
 
     public function delete($id)
     {
-        $this->ensureAuth();
+        // Authentication removed - filter will handle it
         $db = \Config\Database::connect();
         $id = (int)$id;
         $images = $db->table('project_images')->where('project_id',$id)->get()->getResultArray();
@@ -228,15 +232,6 @@ class Project_controller extends BaseController
         $path = rtrim(FCPATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'upload' . DIRECTORY_SEPARATOR . 'project' . DIRECTORY_SEPARATOR . $filename;
         if (file_exists($path)) {
             @unlink($path);
-        }
-    }
-
-    private function ensureAuth(): void
-    {
-        $session = session();
-        if (!$session->get('isLoggedIn')) {
-            redirect()->to('/auth')->send();
-            exit;
         }
     }
 

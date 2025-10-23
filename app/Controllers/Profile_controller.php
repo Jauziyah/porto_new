@@ -5,22 +5,33 @@ namespace App\Controllers;
 use App\Models\Profile_model;
 use CodeIgniter\Controller;
 
-class Profile_controller extends Controller
+class Profile_controller extends BaseController
 {
     public function index()
     {
-        $session = session();
-        if (!$session->get('isLoggedIn')) {
-            return redirect()->to('/auth');
-        }
-
+        // Authentication removed - filter will handle it
         $model = new Profile_model();
         $data = $model->getProfileData();
         return view('pages/profile', $data);
     }
 
+    // PUBLIC API METHODS FOR PORTFOLIO
+    public function getCategories()
+    {
+        $model = new Profile_model();
+        $categories = $model->getCategoriesData(); // This method now exists
+        return $this->response->setJSON($categories);
+    }
+
+    public function getTechStack()
+    {
+        $model = new Profile_model();
+        $techStack = $model->getTechStackData(); // This method now exists
+        return $this->response->setJSON($techStack);
+    }
     public function storeCategory()
     {
+        // Authentication removed - filter will handle it
         helper('url');
         $model = new Profile_model();
         $name = trim((string) $this->request->getPost('name'));
@@ -37,6 +48,7 @@ class Profile_controller extends Controller
 
     public function updateCategory($id)
     {
+        // Authentication removed - filter will handle it
         helper('url');
         $model = new Profile_model();
         $name = trim((string) $this->request->getPost('name'));
@@ -53,6 +65,7 @@ class Profile_controller extends Controller
 
     public function deleteCategory($id)
     {
+        // Authentication removed - filter will handle it
         $model = new Profile_model();
         $model->deleteCategoryById((int)$id);
         return redirect()->to('/profile/manage');
@@ -60,6 +73,7 @@ class Profile_controller extends Controller
 
     public function storeTech()
     {
+        // Authentication removed - filter will handle it
         helper('url');
         $model = new Profile_model();
         $name = trim((string) $this->request->getPost('name'));
@@ -68,7 +82,7 @@ class Profile_controller extends Controller
         if ($name === '' || $slug === '') {
             return redirect()->back()->with('error', 'Name and slug are required');
         }
-        
+
         $imageUrl = null;
         $file = $this->request->getFile('image');
         if ($file && $file->isValid() && !$file->hasMoved()) {
@@ -80,7 +94,7 @@ class Profile_controller extends Controller
             $file->move($targetDir, $newName);
             $imageUrl = $newName; // store filename only
         }
-        
+
         $model->createTech([
             'name' => $name,
             'slug' => $slug,
@@ -92,6 +106,7 @@ class Profile_controller extends Controller
 
     public function updateTech($id)
     {
+        // Authentication removed - filter will handle it
         helper('url');
         $model = new Profile_model();
         $name = trim((string) $this->request->getPost('name'));
@@ -100,13 +115,13 @@ class Profile_controller extends Controller
         if ($name === '' || $slug === '') {
             return redirect()->back()->with('error', 'Name and slug are required');
         }
-        
+
         $updateData = [
             'name' => $name,
             'slug' => $slug,
             'type' => $type ?: null,
         ];
-        
+
         $file = $this->request->getFile('image');
         if ($file && $file->isValid() && !$file->hasMoved()) {
             $targetDir = rtrim(FCPATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'upload' . DIRECTORY_SEPARATOR . 'tech_stack' . DIRECTORY_SEPARATOR;
@@ -116,7 +131,7 @@ class Profile_controller extends Controller
             $newName = $file->getRandomName();
             $file->move($targetDir, $newName);
             $updateData['image_url'] = $newName; // store filename only
-            
+
             // delete old image file
             $oldImage = $model->getTechById((int)$id);
             if ($oldImage['image_url']) {
@@ -126,13 +141,14 @@ class Profile_controller extends Controller
                 }
             }
         }
-        
+
         $model->updateTechById((int)$id, $updateData);
         return redirect()->to('/profile/manage');
     }
 
     public function deleteTech($id)
     {
+        // Authentication removed - filter will handle it
         $model = new Profile_model();
         $model->deleteTechById((int)$id);
         return redirect()->to('/profile/manage');
@@ -141,15 +157,15 @@ class Profile_controller extends Controller
     public function serveImage($filename)
     {
         $filePath = rtrim(FCPATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'upload' . DIRECTORY_SEPARATOR . 'tech_stack' . DIRECTORY_SEPARATOR . $filename;
-        
+
         if (!file_exists($filePath)) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Image not found');
         }
-        
+
         $mimeType = mime_content_type($filePath);
         $this->response->setHeader('Content-Type', $mimeType);
         $this->response->setHeader('Content-Length', filesize($filePath));
-        
+
         return $this->response->sendFile($filePath);
     }
 }

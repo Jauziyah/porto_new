@@ -134,7 +134,7 @@
             </div>
             
             <div class="col-md-6">
-              <label class="form-label text-light">Tags</label>
+              <label class="form-label text-light">Tech Stack</label>
               <div class="custom-checkbox-container">
                 <?php if (!empty($tags)): ?>
                   <?php foreach ($tags as $tag): ?>
@@ -224,7 +224,7 @@
             </div>
             
             <div class="col-md-6">
-              <label class="form-label text-light">Tags</label>
+              <label class="form-label text-light">Tech Stack</label>
               <div class="custom-checkbox-container">
                 <?php if (!empty($tags)): ?>
                   <?php foreach ($tags as $tag): ?>

@@ -37,4 +37,32 @@ class Setting_model extends Model
 
         return $builder->get()->getResultArray();
     }
+
+        // ADD THESE NEW METHODS FOR PUBLIC API
+    public function getWhatIDoData()
+    {
+        return $this->db->table('user_what_i_do')
+                        ->select('id, title, description, icon')
+                        ->where('user_id', 1)
+                        ->get()
+                        ->getResultArray();
+    }
+
+    public function getSocialLinksData()
+    {
+        return $this->db->table('user_social_links')
+                        ->select('id, platform, url, icon')
+                        ->where('user_id', 1)
+                        ->get()
+                        ->getResultArray();
+    }
+
+    public function getSkillsData()
+    {
+        return $this->db->table('user_skills')
+                        ->select('id, name, icon')
+                        ->where('user_id', 1)
+                        ->get()
+                        ->getResultArray();
+    }
 }

@@ -123,4 +123,15 @@ class Profile_model extends Model
             'tech_stacks' => $this->getTechStacks(),
         ];
     }
+
+        // ADD THESE NEW METHODS FOR PUBLIC API
+    public function getCategoriesData()
+    {
+        return $this->getCategories(); // Use existing method
+    }
+
+    public function getTechStackData()
+    {
+        return $this->getTechStacks(); // Use existing method
+    }
 }

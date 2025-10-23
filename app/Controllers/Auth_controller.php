@@ -8,6 +8,12 @@ use CodeIgniter\Controller;
 class Auth_controller extends Controller{
     public function index()
     {
+        // If user is already logged in, redirect to dashboard
+        $session = session();
+        if ($session->get('isLoggedIn')) {
+            return redirect()->to('/content-management');
+        }
+        
         return view('auth');
     }
 
@@ -17,8 +23,10 @@ class Auth_controller extends Controller{
         $userModel = new UserModel();
         $username = $this->request->getPost('username');
         $password = $this->request->getPost('password');
+        
         $user = $userModel->getUserByUsername($username);
-        if ($user && $user['password'] === $password) { // Plaintext comparison for simplicity
+        
+        if ($user && $user['password'] === $password) {
             $session->set('isLoggedIn', true);
             $session->set('username', $user['username']);
             return redirect()->to('/content-management');
@@ -28,33 +36,6 @@ class Auth_controller extends Controller{
         }
     }
 
-    public function contentManagement()
-    {
-        $session = session();
-        if (! $session->get('isLoggedIn')) {
-            return redirect()->to('/auth');
-        }
-        return view('pages/content_management');
-    }
-
-    public function profile()
-    {
-        $session = session();
-        if (! $session->get('isLoggedIn')) {
-            return redirect()->to('/auth');
-        }
-        return view('pages/profile');
-    }
-
-    public function settings()
-    {
-        $session = session();
-        if (! $session->get('isLoggedIn')) {
-            return redirect()->to('/auth');
-        }
-        return view('pages/settings');
-    }
-
     public function logout()
     {
         $session = session();
@@ -62,5 +43,3 @@ class Auth_controller extends Controller{
         return redirect()->to('/auth');
     }
 }
-
-?>
