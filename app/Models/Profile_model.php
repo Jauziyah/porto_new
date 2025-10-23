@@ -49,6 +49,21 @@ class Profile_model extends Model
                         ->getRowArray();
     }
 
+    public function createCategory(array $data): bool
+    {
+        return (bool) $this->db->table('categories')->insert($data);
+    }
+
+    public function updateCategoryById(int $id, array $data): bool
+    {
+        return (bool) $this->db->table('categories')->where('id', $id)->update($data);
+    }
+
+    public function deleteCategoryById(int $id): bool
+    {
+        return (bool) $this->db->table('categories')->where('id', $id)->delete();
+    }
+
     /**
      * Fetch all tech stacks
      * @return array
@@ -72,6 +87,29 @@ class Profile_model extends Model
                         ->where('slug', $slug)
                         ->get()
                         ->getRowArray();
+    }
+
+    public function getTechById(int $id): ?array
+    {
+        return $this->db->table('tech_stack')
+                        ->where('id', $id)
+                        ->get()
+                        ->getRowArray();
+    }
+
+    public function createTech(array $data): bool
+    {
+        return (bool) $this->db->table('tech_stack')->insert($data);
+    }
+
+    public function updateTechById(int $id, array $data): bool
+    {
+        return (bool) $this->db->table('tech_stack')->where('id', $id)->update($data);
+    }
+
+    public function deleteTechById(int $id): bool
+    {
+        return (bool) $this->db->table('tech_stack')->where('id', $id)->delete();
     }
 
     /**
