@@ -57,3 +57,9 @@ $routes->post('/settings/social-links/(:num)/delete', 'Setting_controller::delet
 $routes->post('/settings/skills', 'Setting_controller::storeSkill');
 $routes->post('/settings/skills/(:num)', 'Setting_controller::updateSkill/$1');
 $routes->post('/settings/skills/(:num)/delete', 'Setting_controller::deleteSkill/$1');
+
+
+$routes->group('projects-test', function($routes) {
+    $routes->get('/', 'Project_controller::index');
+    $routes->get('(:num)', 'Project_controller::show/$1');
+});
