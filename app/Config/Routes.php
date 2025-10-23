@@ -12,7 +12,7 @@ $routes->get('/', 'Home::index');
 $routes->get('/auth', 'Auth_controller::index');
 $routes->get('/content-management', 'Auth_controller::contentManagement');
 $routes->get('/profile', 'Profile_controller::index');
-$routes->get('/settings', 'Auth_controller::settings');
+$routes->get('/settings', 'Setting_controller::page');
 
 // endpoint for authentication
 $routes->post('/login', 'Auth_controller::login');
@@ -34,3 +34,26 @@ $routes->post('/profile/tech/(:num)/delete', 'Profile_controller::deleteTech/$1'
 
 // Image upload routes for tech stack
 $routes->get('/tech_stack/(:any)', 'Profile_controller::serveImage/$1');
+
+$routes->group('settings-test', function($routes) {
+    $routes->get('/', 'Setting_controller::index');
+    $routes->get('(:num)', 'Setting_controller::show/$1');
+});
+
+// Settings CRUD
+$routes->post('/settings/user', 'Setting_controller::updateUserBasics');
+
+// What I Do
+$routes->post('/settings/what-i-do', 'Setting_controller::storeWhatIDo');
+$routes->post('/settings/what-i-do/(:num)', 'Setting_controller::updateWhatIDo/$1');
+$routes->post('/settings/what-i-do/(:num)/delete', 'Setting_controller::deleteWhatIDo/$1');
+
+// Social Links
+$routes->post('/settings/social-links', 'Setting_controller::storeSocialLink');
+$routes->post('/settings/social-links/(:num)', 'Setting_controller::updateSocialLink/$1');
+$routes->post('/settings/social-links/(:num)/delete', 'Setting_controller::deleteSocialLink/$1');
+
+// Skills
+$routes->post('/settings/skills', 'Setting_controller::storeSkill');
+$routes->post('/settings/skills/(:num)', 'Setting_controller::updateSkill/$1');
+$routes->post('/settings/skills/(:num)/delete', 'Setting_controller::deleteSkill/$1');
