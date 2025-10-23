@@ -18,3 +18,5 @@ $routes->get('/settings', 'Auth_controller::settings');
 $routes->post('/login', 'Auth_controller::login');
 $routes->get('/logout', to: 'Auth_controller::logout');
 
+
+// Profile Management
