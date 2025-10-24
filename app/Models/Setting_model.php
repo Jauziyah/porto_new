@@ -10,7 +10,7 @@ class Setting_model extends Model
     protected $primaryKey = 'id';
     protected $allowedFields = [
         'username', 'email', 'password',
-        'greeting', 'name', 'hero_description',
+        'greeting', 'name', 'hero_description', 'profile_image',
         'created_at', 'updated_at'
     ];
 

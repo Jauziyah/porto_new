@@ -91,6 +91,29 @@
           <button class="btn btn-success hero-description-save" type="submit" disabled>Save</button>
         </form>
       </div>
+
+      <div class="col-md-6">
+        <label class="form-label text-white-50 small">Profile Image</label>
+        <div class="d-flex flex-column gap-2">
+          <div class="card profile-card text-light rounded-4 overflow-hidden shadow" style="max-width: 260px;">
+            <div class="image-container d-flex align-items-center justify-content-center" style="height: 140px;">
+              <?php if (!empty($user['profile_image'])): ?>
+                <img id="profileImagePreview" src="<?= base_url('/upload/profile/' . $user['profile_image']) ?>" alt="profile image" class="card-image" />
+                <div class="image-overlay"></div>
+              <?php else: ?>
+                <div class="placeholder-content" id="profileImagePlaceholder">
+                  <i class="fas fa-user-circle fa-2x mb-2 opacity-50"></i>
+                  <div class="fw-semibold opacity-75 text-white">No Image</div>
+                </div>
+              <?php endif; ?>
+            </div>
+          </div>
+          <form class="d-flex gap-2" action="<?= site_url('/settings/profile-image') ?>" method="post" enctype="multipart/form-data">
+            <input type="file" class="form-control custom-input" id="profileImageInput" name="profile_image" accept="image/*">
+            <button class="btn btn-success" id="profileImageSave" type="submit" disabled>Save</button>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -610,6 +633,41 @@
             toggleButtonState(button, this.value !== originalValue);
           });
         }
+      });
+    }
+
+    // Profile Image preview and enable save on file select
+    const profileImageInput = document.getElementById('profileImageInput');
+    const profileImageSave = document.getElementById('profileImageSave');
+    const profileImagePlaceholder = document.getElementById('profileImagePlaceholder');
+    let profileImagePreview = document.getElementById('profileImagePreview');
+
+    if (profileImageInput && profileImageSave) {
+      profileImageInput.addEventListener('change', function () {
+        const file = this.files && this.files[0];
+        toggleButtonState(profileImageSave, !!file);
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          if (!profileImagePreview) {
+            const container = (profileImagePlaceholder && profileImagePlaceholder.parentElement) || null;
+            if (container) {
+              // remove placeholder if present
+              if (profileImagePlaceholder) {
+                profileImagePlaceholder.remove();
+              }
+              // create preview image
+              profileImagePreview = document.createElement('img');
+              profileImagePreview.id = 'profileImagePreview';
+              profileImagePreview.className = 'card-image';
+              container.prepend(profileImagePreview);
+            }
+          }
+          if (profileImagePreview) {
+            profileImagePreview.src = e.target.result;
+          }
+        };
+        reader.readAsDataURL(file);
       });
     }
 

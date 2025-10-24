@@ -61,6 +61,9 @@ $routes->group('', ['filter' => 'auth'], function($routes) {
     $routes->post('/settings/what-i-do/(:num)', 'Setting_controller::updateWhatIDo/$1');
     $routes->post('/settings/what-i-do/(:num)/delete', 'Setting_controller::deleteWhatIDo/$1');
 
+    // Profile Image Update
+    $routes->post('/settings/profile-image', 'Setting_controller::updateProfileImage');
+
     // Social Links CRUD (Write operations only)
     $routes->post('/settings/social-links', 'Setting_controller::storeSocialLink');
     $routes->post('/settings/social-links/(:num)', 'Setting_controller::updateSocialLink/$1');

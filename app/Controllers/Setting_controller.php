@@ -36,27 +36,26 @@ class Setting_controller extends BaseController
     }
 
     // PUBLIC API METHODS FOR PORTFOLIO
-// PUBLIC API METHODS FOR PORTFOLIO
-public function getWhatIDo()
-{
-    $model = new Setting_model();
-    $data = $model->getWhatIDoData(); // This method now exists
-    return $this->respond($data);
-}
+    public function getWhatIDo()
+    {
+        $model = new Setting_model();
+        $data = $model->getWhatIDoData(); // This method now exists
+        return $this->respond($data);
+    }
 
-public function getSocialLinks()
-{
-    $model = new Setting_model();
-    $data = $model->getSocialLinksData(); // This method now exists
-    return $this->respond($data);
-}
+    public function getSocialLinks()
+    {
+        $model = new Setting_model();
+        $data = $model->getSocialLinksData(); // This method now exists
+        return $this->respond($data);
+    }
 
-public function getSkills()
-{
-    $model = new Setting_model();
-    $data = $model->getSkillsData(); // This method now exists
-    return $this->respond($data);
-}
+    public function getSkills()
+    {
+        $model = new Setting_model();
+        $data = $model->getSkillsData(); // This method now exists
+        return $this->respond($data);
+    }
 
     public function page($id = 1)
     {
@@ -166,6 +165,36 @@ public function getSkills()
             foreach ($titlesArr as $t) {
                 $db->table('user_titles')->insert(['user_id' => $userId, 'title' => $t]);
             }
+        }
+
+        return redirect()->to('/settings');
+    }
+
+    // --- CRUD: Profile Image (image only) --- //
+    public function updateProfileImage()
+    {
+        // Authentication removed - filter will handle it
+        $userId = 1; // current single-user assumption
+        $db = \Config\Database::connect();
+
+        // Fetch current user to get old image
+        $user = $db->table('users')->where('id', $userId)->get()->getRowArray();
+        if (!$user) {
+            return redirect()->back()->with('error', 'User not found');
+        }
+
+        $file = $this->request->getFile('profile_image');
+        if (!$file || !$file->isValid() || $file->hasMoved()) {
+            return redirect()->back()->with('error', 'No image selected or invalid upload');
+        }
+
+        $newName = $this->handleUploadTo('profile_image', 'profile');
+        if ($newName) {
+            $db->table('users')->where('id', $userId)->update([
+                'profile_image' => $newName,
+            ]);
+            // delete old after successful update
+            $this->deleteOldUploadFrom($user['profile_image'] ?? null, 'profile');
         }
 
         return redirect()->to('/settings');
@@ -354,6 +383,31 @@ public function getSkills()
     {
         if (!$filename) return;
         $path = rtrim(FCPATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'upload' . DIRECTORY_SEPARATOR . 'settings' . DIRECTORY_SEPARATOR . $filename;
+        if (file_exists($path)) {
+            @unlink($path);
+        }
+    }
+
+    // Helpers for uploading to a specific subdir (e.g., 'profile')
+    private function handleUploadTo(string $field, string $subdir): ?string
+    {
+        $file = $this->request->getFile($field);
+        if ($file && $file->isValid() && !$file->hasMoved()) {
+            $targetDir = rtrim(FCPATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'upload' . DIRECTORY_SEPARATOR . trim($subdir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+            if (!is_dir($targetDir)) {
+                @mkdir($targetDir, 0755, true);
+            }
+            $newName = $file->getRandomName();
+            $file->move($targetDir, $newName);
+            return $newName;
+        }
+        return null;
+    }
+
+    private function deleteOldUploadFrom(?string $filename, string $subdir): void
+    {
+        if (!$filename) return;
+        $path = rtrim(FCPATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'upload' . DIRECTORY_SEPARATOR . trim($subdir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $filename;
         if (file_exists($path)) {
             @unlink($path);
         }
