@@ -79,63 +79,6 @@
             background-color: var(--dark-color);
         }
         
-        /* Single Profile Image Styles */
-        .profile-image-container {
-            position: relative;
-            max-width: 450px;
-            margin: 0 auto;
-        }
-        
-        .profile-image-wrapper {
-            position: relative;
-            width: 100%;
-            padding-bottom: 100%; /* 1:1 Aspect Ratio */
-            overflow: hidden;
-            border-radius: 20px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            padding: 4px;
-        }
-        
-        .profile-image {
-            position: absolute;
-            top: 4px;
-            left: 4px;
-            right: 4px;
-            bottom: 4px;
-            width: calc(100% - 8px);
-            height: calc(100% - 8px);
-            object-fit: cover;
-            border-radius: 16px;
-            background-color: var(--dark-color);
-        }
-        
-        /* Decorative elements */
-        .profile-image-container::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            left: -20px;
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, var(--primary-color), transparent);
-            border-radius: 20px;
-            opacity: 0.3;
-            z-index: -1;
-        }
-        
-        .profile-image-container::after {
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            right: -20px;
-            width: 150px;
-            height: 150px;
-            background: linear-gradient(135deg, transparent, var(--accent-color));
-            border-radius: 20px;
-            opacity: 0.3;
-            z-index: -1;
-        }
-        
         .greeting {
             color: var(--primary-color);
             font-size: 1.2rem;
@@ -602,11 +545,6 @@
                 margin-bottom: 35px;
             }
             
-            .profile-image-container {
-                max-width: 350px;
-                margin: 40px auto 0;
-            }
-            
             .social-links-container {
                 display: flex;
                 justify-content: center;
@@ -694,10 +632,6 @@
                 margin-right: auto;
             }
             
-            .profile-image-container {
-                max-width: 300px;
-                margin-top: 40px;
-            }
             
             .project-card {
                 width: 85%;
@@ -739,9 +673,6 @@
                 padding: 60px 0 40px;
             }
             
-            .profile-image-container {
-                max-width: 250px;
-            }
             
             .section-heading {
                 font-size: 2rem;
@@ -767,6 +698,35 @@
             
             .contact-card {
                 padding: 25px 15px;
+            }
+        }
+        
+        .hero-image-placeholder {
+            width: 100%;
+            max-width: 500px;
+            height: 300px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-color);
+            font-size: 1.2rem;
+            margin-left: 40px;
+        }
+
+        @media (max-width: 991.98px) {
+            .hero-image-placeholder {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .hero-image-placeholder {
+                order: -1;
+                margin-bottom: 20px;
+                height: 250px;
             }
         }
     </style>
@@ -807,13 +767,38 @@
             <div class="row align-items-center">
                 <!-- Content Column -->
                 <div class="col-lg-6">
-                    <p class="greeting">Hallo, Ich bin</p>
-                    <h1 class="name">MAULANA EL JAUZIYAH AL GHANI</h1>
-                    <h2 class="title">Junior PHP Developer</h2>
+                    <div class="hero-image-placeholder d-lg-none">
+                        <img src="<?= base_url('upload/profile/' . ($profile['profile_image'] ?? '')) ?>" alt="<?= $profile['name'] ?? 'Profile Image' ?>" style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px;" />
+                    </div>
+                    <p class="greeting"><?= $profile['greeting'] ?? 'Hallo, Ich bin' ?></p>
+                    <h1 class="name"><?= $profile['name'] ?? 'MAULANA EL JAUZIYAH AL GHANI' ?></h1>
+                    <h2 class="title">
+                        <?php if (!empty($titles)): ?>
+                            <?php if (count($titles) === 1): ?>
+                                <?= $titles[0]['title'] ?>
+                            <?php else: ?>
+                                <div class="title-belt-container" style="overflow: hidden;">
+                                    <div class="title-belt" style="display: flex; animation: scrollTitles <?= count($titles) * 5 ?>s linear infinite;">
+                                        <?php foreach (array_merge($titles, $titles) as $title): ?>
+                                            <div class="title-item" style="flex-shrink: 0; padding: 0 20px;">
+                                                <?= $title['title'] ?>
+                                            </div>
+                                        <?php endforeach ?>
+                                    </div>
+                                </div>
+                                <style>
+                                    @keyframes scrollTitles {
+                                        0% { transform: translateX(0); }
+                                        100% { transform: translateX(-50%); }
+                                    }
+                                </style>
+                            <?php endif ?>
+                        <?php else: ?>
+                            Junior PHP Developer
+                        <?php endif ?>
+                    </h2>
                     <p class="description">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed rutrum felis.  
-                        Praesent ultrices mauris a lectus eleifend, quis vehicula nulla sodales. Nullam et  
-                        lorem eu nulla vehicula pharetra. In la pretium arcu, sed convallis dolor.
+                        <?= $profile['hero_description'] ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed rutrum felis. Praesent ultrices mauris a lectus eleifend, quis vehicula nulla sodales. Nullam et lorem eu nulla vehicula pharetra. In la pretium arcu, sed convallis dolor.' ?>
                     </p>
                     
                     <div class="row">
@@ -846,12 +831,10 @@
                     <button class="btn btn-custom mt-2">View My Projects</button>
                 </div>
                 
-                <!-- Profile Image Column -->
-                <div class="col-lg-6">
-                    <div class="profile-image-container">
-                        <div class="profile-image-wrapper">
-                            <img src="https://via.placeholder.com/450x450/2A2A2A/3a86ff?text=Profile+Photo" alt="Profile Photo" class="profile-image">
-                        </div>
+                <!-- Image Placeholder Column -->
+                <div class="col-lg-6 d-none d-lg-block">
+                    <div class="hero-image-placeholder">
+                        <img src="<?= base_url('upload/profile/' . ($profile['profile_image'] ?? '')) ?>" alt="<?= $profile['name'] ?? 'Profile Image' ?>" style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px;" />
                     </div>
                 </div>
             </div>

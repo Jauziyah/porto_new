@@ -16,9 +16,11 @@ class Porto_controller extends BaseController
         $this->model = new Porto_model();
     }
 
-        public function index()
+    public function index()
     {
-        return view('portofolio/main_layout');
+        $data['profile'] = $this->model->getUserProfile();
+        $data['titles'] = $this->model->getUserTitles();
+        return view('portofolio/main_layout', $data);
     }
     
     public function getUserProfile()

@@ -13,6 +13,7 @@ class Porto_model extends Model
     {
         return $this->db->table('users')
             ->select('greeting, name, hero_description, profile_image, created_at, updated_at')
+            ->where('id', 1)
             ->get()->getRowArray();
     }
 
