@@ -79,12 +79,61 @@
             background-color: var(--dark-color);
         }
         
-        .profile-image {
+        /* Single Profile Image Styles */
+        .profile-image-container {
+            position: relative;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+        
+        .profile-image-wrapper {
+            position: relative;
             width: 100%;
-            height: 100%;
+            padding-bottom: 100%; /* 1:1 Aspect Ratio */
+            overflow: hidden;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 4px;
+        }
+        
+        .profile-image {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            right: 4px;
+            bottom: 4px;
+            width: calc(100% - 8px);
+            height: calc(100% - 8px);
             object-fit: cover;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-radius: 16px;
+            background-color: var(--dark-color);
+        }
+        
+        /* Decorative elements */
+        .profile-image-container::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary-color), transparent);
+            border-radius: 20px;
+            opacity: 0.3;
+            z-index: -1;
+        }
+        
+        .profile-image-container::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, transparent, var(--accent-color));
+            border-radius: 20px;
+            opacity: 0.3;
+            z-index: -1;
         }
         
         .greeting {
@@ -181,34 +230,6 @@
             background-color: var(--secondary-color);
             transform: translateY(-3px);
             color: white;
-        }
-        
-        .image-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(2, 1fr);
-            gap: 15px;
-            height: 400px;
-        }
-        
-        .grid-item {
-            border-radius: 10px;
-            overflow: hidden;
-            background-color: rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .grid-item.large {
-            grid-column: 2;
-            grid-row: 1 / span 2;
-        }
-        
-        .grid-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
         
         .services-section {
@@ -581,18 +602,9 @@
                 margin-bottom: 35px;
             }
             
-            .image-grid {
-                height: 400px;
-                max-width: 600px;
+            .profile-image-container {
+                max-width: 350px;
                 margin: 40px auto 0;
-                grid-template-columns: 1fr 1.5fr;
-                grid-template-rows: 1fr 1fr;
-                gap: 20px;
-            }
-            
-            .grid-item.large {
-                grid-column: 2;
-                grid-row: 1 / span 2;
             }
             
             .social-links-container {
@@ -682,8 +694,8 @@
                 margin-right: auto;
             }
             
-            .image-grid {
-                height: 300px;
+            .profile-image-container {
+                max-width: 300px;
                 margin-top: 40px;
             }
             
@@ -727,8 +739,8 @@
                 padding: 60px 0 40px;
             }
             
-            .image-grid {
-                height: 250px;
+            .profile-image-container {
+                max-width: 250px;
             }
             
             .section-heading {
@@ -836,15 +848,9 @@
                 
                 <!-- Profile Image Column -->
                 <div class="col-lg-6">
-                    <div class="image-grid">
-                        <div class="grid-item">
-                            <img src="https://via.placeholder.com/300x300/2A2A2A/3a86ff?text=Profile+1" alt="Profile Image 1" class="profile-image">
-                        </div>
-                        <div class="grid-item large">
-                            <img src="https://via.placeholder.com/300x600/2A2A2A/8338ec?text=Main+Profile" alt="Main Profile Image" class="profile-image">
-                        </div>
-                        <div class="grid-item">
-                            <img src="https://via.placeholder.com/300x300/2A2A2A/3a86ff?text=Profile+2" alt="Profile Image 2" class="profile-image">
+                    <div class="profile-image-container">
+                        <div class="profile-image-wrapper">
+                            <img src="https://via.placeholder.com/450x450/2A2A2A/3a86ff?text=Profile+Photo" alt="Profile Photo" class="profile-image">
                         </div>
                     </div>
                 </div>
