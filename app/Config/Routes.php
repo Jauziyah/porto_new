@@ -7,7 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 // Public routes (no authentication required)
-$routes->get('/', 'Home::index');
+$routes->get('/', 'Porto_controller::index');
 $routes->get('/auth', 'Auth_controller::index');
 $routes->post('/login', 'Auth_controller::login');
 
