@@ -903,26 +903,6 @@
         <div class="container">
             <h2 class="section-heading mb-5">My Latest Projects</h2>
 
-            <!-- Carousel -->
-            <div id="projectCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="https://via.placeholder.com/1200x500/2A2A2A/3a86ff?text=Project+Showcase+1" class="d-block w-100 rounded" alt="Project 1">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://via.placeholder.com/1200x500/2A2A2A/8338ec?text=Project+Showcase+2" class="d-block w-100 rounded" alt="Project 2">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://via.placeholder.com/1200x500/2A2A2A/CB476E?text=Project+Showcase+3" class="d-block w-100 rounded" alt="Project 3">
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#projectCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon"></span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#projectCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon"></span>
-                </button>
-            </div>
 
             <!-- Horizontal Scroll Slider -->
             <div class="project-slider d-flex overflow-auto pb-3">

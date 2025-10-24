@@ -19,14 +19,17 @@ $routes->get('/content-management', 'Project_controller::page');
 $routes->get('/profile', 'Profile_controller::index');
 $routes->get('/settings', 'Setting_controller::page');
 
-// Public API endpoints for portfolio data (cleaner API structure)
-$routes->get('/api/categories', 'Profile_controller::getCategories');
-$routes->get('/api/tech-stack', 'Profile_controller::getTechStack');        
-$routes->get('/api/what-i-do', 'Setting_controller::getWhatIDo');
-$routes->get('/api/social-links', 'Setting_controller::getSocialLinks');
-$routes->get('/api/skills', 'Setting_controller::getSkills');
-$routes->get('/api/projects', 'Project_controller::getProjects');
-$routes->get('/api/projects/(:num)', 'Project_controller::show/$1');
+// Public API endpoints
+$routes->get('/api/profile', 'Porto_controller::getUserProfile');
+$routes->get('/api/skills', 'Porto_controller::getUserSkills');
+$routes->get('/api/social-links', 'Porto_controller::getUserSocialLinks');
+$routes->get('/api/titles', 'Porto_controller::getUserTitles');
+$routes->get('/api/what-i-do', 'Porto_controller::getUserWhatIDo');
+$routes->get('/api/categories', 'Porto_controller::getCategories');
+$routes->get('/api/projects', 'Porto_controller::getProjects');
+$routes->get('/api/projects/(:num)', 'Porto_controller::getProjectDetails/$1');
+$routes->get('/api/tech-stack', 'Porto_controller::getTechStack');
+$routes->get('/api/all-data', 'Porto_controller::getAllData');
 
 // Test routes (public) - optional, can be removed in production
 $routes->get('settings-test', 'Setting_controller::index');
