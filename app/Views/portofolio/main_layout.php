@@ -832,7 +832,7 @@
                                         <?php foreach ($socialLinks as $link): ?>
                                             <a href="<?= $link['url'] ?>" class="social-icon" target="_blank" rel="noopener noreferrer" title="<?= $link['platform'] ?>">
                                                 <?php if (!empty($link['icon'])): ?>
-                                                    <img src="<?= base_url('upload/profile/' . $link['icon']) ?>" alt="<?= $link['platform'] ?>">
+                                                    <img src="<?= base_url('upload/settings/' . $link['icon']) ?>" alt="<?= $link['platform'] ?>">
                                                 <?php else: ?>
                                                     <i class="fab fa-<?= strtolower($link['platform']) ?>"></i>
                                                 <?php endif; ?>
@@ -1087,19 +1087,25 @@
             <div class="row">
                 <div class="col-md-6">
                     <h5>M.E.J.A Ghani</h5>
-                    <p class="text-muted">Junior PHP Developer</p>
+                    <?php if (!empty($titles)): ?>
+                        <p class="text-muted"><?= $titles[0]['title'] ?></p>
+                    <?php else: ?>
+                        <p class="text-muted">Junior PHP Developer</p>
+                    <?php endif; ?>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <div class="social-links">
-                        <a href="#" class="social-icon">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="#" class="social-icon">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="#" class="social-icon">
-                            <i class="fab fa-instagram"></i>
-                        </a>
+                        <?php if (!empty($socialLinks)): ?>
+                            <?php foreach ($socialLinks as $link): ?>
+                                <a href="<?= $link['url'] ?>" class="social-icon" target="_blank" rel="noopener noreferrer" title="<?= $link['platform'] ?>">
+                                    <?php if (!empty($link['icon'])): ?>
+                                        <img src="<?= base_url('upload/settings/' . $link['icon']) ?>" alt="<?= $link['platform'] ?>">
+                                    <?php else: ?>
+                                        <i class="fab fa-<?= strtolower($link['platform']) ?>"></i>
+                                    <?php endif; ?>
+                                </a>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
