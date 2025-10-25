@@ -997,16 +997,16 @@
             <h2 class="section-heading mb-5">Skills and Tools</h2>
             <div class="row g-4">
                 <?php if (!empty($techStack)): ?>
-                    <?php 
+                    <?php
                     // Group tech stack by type
                     $groupedTechStack = [];
                     foreach ($techStack as $tech) {
                         $type = ucfirst($tech['type'] ?? 'Other');
                         $groupedTechStack[$type][] = $tech;
                     }
-                    
+
                     // Display each type as a separate card
-                    foreach ($groupedTechStack as $type => $items): 
+                    foreach ($groupedTechStack as $type => $items):
                     ?>
                         <div class="col-md-6">
                             <div class="skill-category">
@@ -1046,7 +1046,7 @@
             <h2 class="section-heading">Get In Touch</h2>
 
             <div class="contact-card mx-auto p-4">
-                <form action="send_email.php" method="POST">
+                <form action="<?= site_url('contact/send_email') ?>" method="POST">
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="name" class="form-label">Your Name</label>
@@ -1080,6 +1080,31 @@
             </div>
         </div>
     </section>
+
+    <?php if (session()->has('success')): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= session('success') ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
+
+    <?php if (session()->has('error')): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?= session('error') ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
+
+    <?php if (session()->has('errors')): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <ul class="mb-0">
+                <?php foreach (session('errors') as $error): ?>
+                    <li><?= $error ?></li>
+                <?php endforeach; ?>
+            </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
 
     <!-- Footer -->
     <footer class="footer">

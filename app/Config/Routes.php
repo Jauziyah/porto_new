@@ -31,6 +31,8 @@ $routes->get('/api/projects/(:num)', 'Porto_controller::getProjectDetails/$1');
 $routes->get('/api/tech-stack', 'Porto_controller::getTechStack');
 $routes->get('/api/all-data', 'Porto_controller::getAllData');
 
+$routes->post('contact/send_email', 'Contact::send_email'); 
+
 // Test routes (public) - optional, can be removed in production
 $routes->get('settings-test', 'Setting_controller::index');
 $routes->get('settings-test/(:num)', 'Setting_controller::show/$1');
