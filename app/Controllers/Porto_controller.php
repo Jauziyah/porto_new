@@ -23,6 +23,8 @@ class Porto_controller extends BaseController
         $data['socialLinks'] = $this->model->getUserSocialLinks();
         $data['skills'] = $this->model->getUserSkills();
         $data['whatIDo'] = $this->model->getUserWhatIDo();
+        $data['projects'] = $this->model->getAllProjectData();
+        $data['techStack'] = $this->model->getTechStack();
         return view('portofolio/main_layout', $data);
     }
     

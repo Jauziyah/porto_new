@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,37 +18,37 @@
             --gray-color: #6c757d;
             --text-color: #E9ECEF;
         }
-        
+
         html {
             scroll-behavior: smooth;
         }
-        
+
         body {
             font-family: 'Manrope', sans-serif;
             background-color: var(--dark-color);
             color: var(--text-color);
             line-height: 1.6;
         }
-        
+
         .navbar {
             background-color: var(--dark-color);
             padding: 1.5rem 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
         }
-        
+
         .navbar.scrolled {
             padding: 1rem 0;
             background-color: rgba(2, 10, 16, 0.95);
             backdrop-filter: blur(10px);
         }
-        
+
         .navbar-brand {
             font-weight: 700;
             color: var(--accent-color) !important;
             font-size: 1.5rem;
         }
-        
+
         .navbar-nav .nav-link {
             color: var(--text-color);
             font-weight: 500;
@@ -55,15 +56,15 @@
             position: relative;
             transition: all 0.3s ease;
         }
-        
+
         .navbar-nav .nav-link:hover {
             color: var(--primary-color);
         }
-        
+
         .navbar-nav .nav-link.active {
             color: var(--primary-color);
         }
-        
+
         .navbar-nav .nav-link.active::after {
             content: '';
             position: absolute;
@@ -73,12 +74,12 @@
             height: 2px;
             background-color: var(--primary-color);
         }
-        
+
         .hero-section {
             padding: 100px 0 80px;
             background-color: var(--dark-color);
         }
-        
+
         .greeting {
             color: var(--primary-color);
             font-size: 1.2rem;
@@ -86,7 +87,7 @@
             margin-bottom: 10px;
             letter-spacing: 1px;
         }
-        
+
         .name {
             font-size: 2.8rem;
             font-weight: 700;
@@ -94,32 +95,32 @@
             margin-bottom: 15px;
             line-height: 1.2;
         }
-        
+
         .title {
             font-size: 1.5rem;
             color: var(--secondary-color);
             margin-bottom: 25px;
             font-weight: 500;
         }
-        
+
         .description {
             color: var(--gray-color);
             line-height: 1.7;
             margin-bottom: 40px;
             max-width: 600px;
         }
-        
+
         .social-links {
             margin-bottom: 30px;
         }
-        
+
         .section-title {
             font-weight: 600;
             color: var(--text-color);
             margin-bottom: 15px;
             font-size: 1.1rem;
         }
-        
+
         .social-icon {
             display: inline-flex;
             align-items: center;
@@ -134,13 +135,19 @@
             font-size: 1.2rem;
             text-decoration: none;
         }
-        
+
         .social-icon:hover {
             background-color: var(--primary-color);
             color: white;
             transform: translateY(-3px);
         }
-        
+
+        .social-icon img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
+
         .skill-badge {
             display: inline-block;
             background-color: rgba(255, 255, 255, 0.1);
@@ -152,13 +159,13 @@
             font-weight: 500;
             transition: all 0.3s ease;
         }
-        
+
         .skill-badge:hover {
             background-color: var(--primary-color);
             color: white;
             transform: translateY(-2px);
         }
-        
+
         .btn-custom {
             background-color: var(--primary-color);
             color: white;
@@ -168,140 +175,66 @@
             border: none;
             transition: all 0.3s ease;
         }
-        
+
         .btn-custom:hover {
             background-color: var(--secondary-color);
             transform: translateY(-3px);
             color: white;
         }
-        
+
         .services-section {
             padding: 80px 0;
             background-color: rgba(255, 255, 255, 0.03);
         }
-        
+
         .service-card {
             background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 30px;
-            height: 100%;
-            transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .service-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-color);
-        }
-        
-        .service-icon {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-        
-        .service-card h4 {
-            color: var(--text-color);
-            margin-bottom: 15px;
-        }
-        
-        .service-card p {
-            color: var(--gray-color);
-        }
-        
-        .section-heading {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 50px;
-            text-align: center;
-            color: var(--text-color);
-        }
-
-        /* Skills and Tools Section */
-        .skills-section {
-            padding: 80px 0;
-            background-color: rgba(255, 255, 255, 0.03);
-        }
-
-        .skill-category {
-            background-color: rgba(255, 255, 255, 0.05);
             border-radius: 12px;
-            padding: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 24px;
             transition: all 0.3s ease;
-            height: 100%;
+            color: var(--text-color);
         }
 
-        .skill-category:hover {
-            transform: translateY(-5px);
+        .service-card:hover {
+            transform: translateY(-8px);
             border-color: var(--primary-color);
         }
 
-        .skill-title {
-            color: var(--text-color);
-            margin-bottom: 20px;
-            font-weight: 600;
-            font-size: 1.2rem;
-        }
-
-        .tool-icons {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .tool-icon {
-            background-color: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            padding: 10px;
-            width: 65px;
-            height: 65px;
+        .icon-container {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
+            overflow: hidden;
         }
 
-        .tool-icon img {
-            width: 40px;
-            height: 40px;
+        .icon-container img {
+            max-width: 70%;
+            max-height: 70%;
             object-fit: contain;
-            border-radius: 5px;
         }
 
-        .tool-icon:hover {
-            background-color: var(--primary-color);
-            transform: translateY(-3px);
+        .icon-container i {
+            font-size: 36px;
+            color: var(--primary-color);
         }
 
-        /* Projects Section */
-        .projects-section {
-            padding: 80px 0;
-            background-color: var(--dark-color);
+        @media (max-width: 768px) {
+            .icon-container {
+                width: 70px;
+                height: 70px;
+            }
+
+            .service-card {
+                padding: 25px 15px;
+            }
         }
 
-        /* Carousel Styling */
-        .carousel-inner img {
-            border-radius: 10px;
-            object-fit: cover;
-            height: 500px;
-        }
-
-        .carousel-control-prev,
-        .carousel-control-next {
-            width: 5%;
-        }
-
-        .carousel-control-prev-icon,
-        .carousel-control-next-icon {
-            background-color: var(--primary-color);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-        }
-
-        /* Project slider */
         .project-slider {
             scrollbar-width: thin;
             scrollbar-color: var(--primary-color) rgba(255, 255, 255, 0.1);
@@ -334,7 +267,6 @@
         }
 
         .project-card:hover {
-            transform: translateY(-5px);
             border-color: var(--primary-color);
         }
 
@@ -375,7 +307,7 @@
             background-color: var(--secondary-color);
             transform: translateY(-2px);
         }
-        
+
         /* Modal Styling */
         .modal-content {
             background-color: var(--dark-color);
@@ -453,7 +385,7 @@
             background-color: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
         }
-        
+
         /* Contact Section */
         .contact-section {
             padding: 80px 0;
@@ -507,36 +439,129 @@
             background-color: var(--secondary-color);
             transform: translateY(-3px);
         }
-        
+
         /* Footer */
         .footer {
             background-color: rgba(0, 0, 0, 0.2);
             padding: 40px 0;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
+        /* Headings */
+        .section-heading {
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* Projects Section */
+        .projects-section {
+            padding: 80px 0;
+            background-color: var(--dark-color);
+        }
+
+        /* Skills Section */
+        .skill-category {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            border-color: var(--primary-color);
+        }
+
+        .skill-title {
+            color: var(--text-color);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .tool-icons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .tool-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tool-icon img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+
+        /* Title belt animation */
+        .title-belt-container {
+            overflow: hidden;
+        }
+
+        .title-belt {
+            display: flex;
+            animation: scrollTitles 20s linear infinite;
+        }
+
+        .title-item {
+            flex-shrink: 0;
+            padding: 0 20px;
+        }
+
+        @keyframes scrollTitles {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Hero image */
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
         /* Tablet View Optimizations (768px - 991px) */
         @media (min-width: 768px) and (max-width: 991.98px) {
+
             /* Hero Section Tablet Fixes */
             .hero-section {
                 padding: 90px 0 70px;
             }
-            
+
             .hero-section .row {
                 flex-direction: column-reverse;
                 text-align: center;
             }
-            
+
             .name {
                 font-size: 2.8rem;
                 margin-bottom: 15px;
             }
-            
+
             .title {
                 font-size: 1.6rem;
                 margin-bottom: 25px;
             }
-            
+
             .description {
                 font-size: 1.1rem;
                 max-width: 85%;
@@ -544,163 +569,164 @@
                 margin-right: auto;
                 margin-bottom: 35px;
             }
-            
+
             .social-links-container {
                 display: flex;
                 justify-content: center;
                 margin-bottom: 25px;
             }
-            
-            .social-links, .skills {
+
+            .social-links,
+            .skills {
                 text-align: center;
                 margin-bottom: 25px;
             }
-            
+
             .social-icon {
                 margin: 0 10px 10px;
             }
-            
+
             .skill-badge {
                 margin: 0 8px 12px;
             }
-            
+
             .btn-custom {
                 padding: 14px 35px;
                 font-size: 1.05rem;
             }
-            
+
             /* Services Section */
             .service-card {
                 padding: 25px;
                 margin-bottom: 25px;
             }
-            
+
             .service-icon {
                 font-size: 2.3rem;
             }
-            
+
             /* Projects Section */
             .project-card {
                 width: 300px;
             }
-            
+
             .carousel-inner img {
                 height: 400px;
             }
-            
+
             /* Skills Section */
             .skill-category {
                 padding: 22px;
                 margin-bottom: 20px;
             }
-            
+
             .tool-icons {
                 gap: 12px;
                 justify-content: center;
             }
-            
+
             .tool-icon {
                 width: 62px;
                 height: 62px;
             }
-            
+
             /* Contact Section */
             .contact-card {
                 padding: 35px 30px;
             }
-            
+
             /* General */
             .section-heading {
                 font-size: 2.4rem;
                 margin-bottom: 45px;
             }
         }
-        
+
         /* Mobile Styles */
         @media (max-width: 767.98px) {
             .hero-section {
                 padding: 80px 0 60px;
                 text-align: center;
             }
-            
+
             .name {
                 font-size: 2.2rem;
             }
-            
+
             .description {
                 margin-left: auto;
                 margin-right: auto;
             }
-            
-            
+
+
             .project-card {
                 width: 85%;
                 margin: 0 auto 1.5rem;
             }
-            
+
             .carousel-inner img {
                 height: 300px;
             }
-            
+
             .skill-category {
                 text-align: center;
                 margin-bottom: 25px;
             }
-            
+
             .tool-icons {
                 justify-content: center;
             }
-            
+
             .contact-card {
                 padding: 30px 20px;
             }
-            
+
             .section-heading {
                 font-size: 2.2rem;
             }
         }
-        
+
         @media (max-width: 575.98px) {
             .name {
                 font-size: 1.8rem;
             }
-            
+
             .title {
                 font-size: 1.3rem;
             }
-            
+
             .hero-section {
                 padding: 60px 0 40px;
             }
-            
-            
+
+
             .section-heading {
                 font-size: 2rem;
             }
-            
+
             .tool-icons {
                 gap: 10px;
             }
-            
+
             .tool-icon {
                 width: 55px;
                 height: 55px;
             }
-            
+
             .tool-icon img {
                 width: 35px;
                 height: 35px;
             }
-            
+
             .skill-category {
                 padding: 20px;
             }
-            
+
             .contact-card {
                 padding: 25px 15px;
             }
         }
-        
+
         .hero-image-placeholder {
             width: 100%;
             max-width: 500px;
@@ -732,6 +758,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top" id="navbar">
@@ -769,7 +796,7 @@
                 <!-- Content Column -->
                 <div class="col-lg-6">
                     <div class="hero-image-placeholder d-lg-none">
-                        <img src="<?= base_url('upload/profile/' . ($profile['profile_image'] ?? '')) ?>" alt="<?= $profile['name'] ?? 'Profile Image' ?>" style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s ease;" />
+                        <img src="<?= base_url('upload/profile/' . ($profile['profile_image'] ?? '')) ?>" alt="<?= $profile['name'] ?? 'Profile Image' ?>" class="hero-image" />
                     </div>
                     <p class="greeting"><?= $profile['greeting'] ?? 'Hallo, Ich bin' ?></p>
                     <h1 class="name"><?= $profile['name'] ?? 'MAULANA EL JAUZIYAH AL GHANI' ?></h1>
@@ -778,21 +805,15 @@
                             <?php if (count($titles) === 1): ?>
                                 <?= $titles[0]['title'] ?>
                             <?php else: ?>
-                                <div class="title-belt-container" style="overflow: hidden;">
-                                    <div class="title-belt" style="display: flex; animation: scrollTitles <?= count($titles) * 5 ?>s linear infinite;">
+                                <div class="title-belt-container">
+                                    <div class="title-belt">
                                         <?php foreach (array_merge($titles, $titles) as $title): ?>
-                                            <div class="title-item" style="flex-shrink: 0; padding: 0 20px;">
+                                            <div class="title-item">
                                                 <?= $title['title'] ?>
                                             </div>
                                         <?php endforeach ?>
                                     </div>
                                 </div>
-                                <style>
-                                    @keyframes scrollTitles {
-                                        0% { transform: translateX(0); }
-                                        100% { transform: translateX(-50%); }
-                                    }
-                                </style>
                             <?php endif ?>
                         <?php else: ?>
                             Junior PHP Developer
@@ -801,7 +822,7 @@
                     <p class="description">
                         <?= $profile['hero_description'] ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed rutrum felis. Praesent ultrices mauris a lectus eleifend, quis vehicula nulla sodales. Nullam et lorem eu nulla vehicula pharetra. In la pretium arcu, sed convallis dolor.' ?>
                     </p>
-                    
+
                     <div class="row">
                         <div class="col-md-6 mb-4">
                             <div class="social-links">
@@ -811,7 +832,7 @@
                                         <?php foreach ($socialLinks as $link): ?>
                                             <a href="<?= $link['url'] ?>" class="social-icon" target="_blank" rel="noopener noreferrer" title="<?= $link['platform'] ?>">
                                                 <?php if (!empty($link['icon'])): ?>
-                                                    <img src="<?= base_url('upload/profile/' . $link['icon']) ?>" alt="<?= $link['platform'] ?>" style="width: 20px; height: 20px; object-fit: contain;">
+                                                    <img src="<?= base_url('upload/profile/' . $link['icon']) ?>" alt="<?= $link['platform'] ?>">
                                                 <?php else: ?>
                                                     <i class="fab fa-<?= strtolower($link['platform']) ?>"></i>
                                                 <?php endif; ?>
@@ -836,14 +857,14 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <button class="btn btn-custom mt-2">View My Projects</button>
                 </div>
-                
+
                 <!-- Image Placeholder Column -->
                 <div class="col-lg-6 d-none d-lg-block">
                     <div class="hero-image-placeholder">
-                        <img src="<?= base_url('upload/profile/' . ($profile['profile_image'] ?? '')) ?>" alt="<?= $profile['name'] ?? 'Profile Image' ?>" style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s ease;" />
+                        <img src="<?= base_url('upload/profile/' . ($profile['profile_image'] ?? '')) ?>" alt="<?= $profile['name'] ?? 'Profile Image' ?>" class="hero-image" />
                     </div>
                 </div>
             </div>
@@ -862,12 +883,16 @@
                 <?php if (!empty($whatIDo)): ?>
                     <?php foreach ($whatIDo as $service): ?>
                         <div class="col-md-4 mb-4">
-                            <div class="service-card">
+                            <div class="service-card text-center">
                                 <div class="service-icon">
                                     <?php if (!empty($service['icon'])): ?>
-                                        <img src="<?= base_url('upload/profile/' . $service['icon']) ?>" alt="<?= $service['title'] ?>" style="width: 40px; height: 40px; object-fit: contain;">
+                                        <div class="icon-container">
+                                            <img src="<?= base_url('upload/settings/' . $service['icon']) ?>" alt="<?= $service['title'] ?>">
+                                        </div>
                                     <?php else: ?>
-                                        <i class="fas fa-code"></i>
+                                        <div class="icon-container">
+                                            <i class="fas fa-code"></i>
+                                        </div>
                                     <?php endif; ?>
                                 </div>
                                 <h4><?= $service['title'] ?></h4>
@@ -885,149 +910,132 @@
         <div class="container">
             <h2 class="section-heading mb-5">My Latest Projects</h2>
 
-
             <!-- Horizontal Scroll Slider -->
             <div class="project-slider d-flex overflow-auto pb-3">
-                <div class="project-card me-4 flex-shrink-0">
-                    <img src="https://via.placeholder.com/400x250/2A2A2A/3a86ff?text=Kopsis+Project" class="project-img mb-3" alt="Project">
-                    <h4>Kopsis Project</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed rutrum felis. Nullam et lorem eu nulla vehicula pharetra.</p>
-                    <button class="btn btn-detail" data-bs-toggle="modal" data-bs-target="#projectModal1">View Detail</button>
-                </div>
-                <div class="project-card me-4 flex-shrink-0">
-                    <img src="https://via.placeholder.com/400x250/2A2A2A/8338ec?text=Student+App" class="project-img mb-3" alt="Project">
-                    <h4>Student Management</h4>
-                    <p>Modern web app for managing students and classes efficiently with PHP backend and MySQL databases.</p>
-                    <button class="btn btn-detail" data-bs-toggle="modal" data-bs-target="#projectModal2">View Detail</button>
-                </div>
-                <div class="project-card me-4 flex-shrink-0">
-                    <img src="https://via.placeholder.com/400x250/2A2A2A/CB476E?text=E-Shop" class="project-img mb-3" alt="Project">
-                    <h4>E-Shop CMS</h4>
-                    <p>Responsive online shop management system built with CodeIgniter framework for lightweight performance.</p>
-                    <button class="btn btn-detail" data-bs-toggle="modal" data-bs-target="#projectModal3">View Detail</button>
-                </div>
-                <div class="project-card me-4 flex-shrink-0">
-                    <img src="https://via.placeholder.com/400x250/2A2A2A/3a86ff?text=Portfolio" class="project-img mb-3" alt="Project">
-                    <h4>Personal Portfolio</h4>
-                    <p>My fully responsive personal portfolio website featuring a clean design and smooth animations.</p>
-                    <button class="btn btn-detail" data-bs-toggle="modal" data-bs-target="#projectModal4">View Detail</button>
-                </div>
+                <?php if (!empty($projects)): ?>
+                    <?php foreach ($projects as $project): ?>
+                        <div class="project-card me-4 flex-shrink-0">
+                            <?php if (!empty($project['images'])): ?>
+                                <img src="<?= base_url('upload/project/' . $project['images'][0]['url']) ?>" class="project-img mb-3" alt="<?= $project['title'] ?>">
+                            <?php else: ?>
+                                <img src="https://via.placeholder.com/400x250/2A2A2A/3a86ff?text=No+Image" class="project-img mb-3" alt="No Image">
+                            <?php endif; ?>
+                            <h4><?= $project['title'] ?></h4>
+                            <p><?= substr($project['description'], 0, 100) . (strlen($project['description']) > 100 ? '...' : '') ?></p>
+                            <button class="btn btn-detail" data-bs-toggle="modal" data-bs-target="#projectModal<?= $project['id'] ?>">View Detail</button>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
     </section>
 
     <!-- Project Modals -->
-    <!-- Modal 1 -->
-    <div class="modal fade" id="projectModal1" tabindex="-1" aria-labelledby="projectModal1Label" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="projectModal1Label">Kopsis Project</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <img src="https://via.placeholder.com/800x400/2A2A2A/3a86ff?text=Kopsis+Project+Details" class="img-fluid rounded mb-4" alt="Project Details">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed rutrum felis. Praesent ultrices mauris a lectus eleifend, quis vehicula nulla sodales.</p>
-                    <p>Nullam et lorem eu nulla vehicula pharetra. In la pretium arcu, sed convallis dolor. Vivamus ac justo euismod, aliquet nisl et, ultricies nunc.</p>
-                    <h6 class="mt-4 mb-3">Technologies Used:</h6>
-                    <div class="modal-tech-stack">
-                        <span class="tech-badge">PHP</span>
-                        <span class="tech-badge">CodeIgniter</span>
-                        <span class="tech-badge">MySQL</span>
-                        <span class="tech-badge">Bootstrap</span>
-                        <span class="tech-badge">JavaScript</span>
-                    </div>
+    <?php if (!empty($projects)): ?>
+        <?php foreach ($projects as $project): ?>
+            <div class="modal fade" id="projectModal<?= $project['id'] ?>" tabindex="-1" aria-labelledby="projectModal<?= $project['id'] ?>Label" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="projectModal<?= $project['id'] ?>Label"><?= $project['title'] ?></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <?php if (!empty($project['images'])): ?>
+                                <div id="carousel-<?= $project['id'] ?>" class="carousel slide mb-4" data-bs-ride="carousel" data-bs-interval="4000">
+                                    <div class="carousel-inner rounded" style="max-width: 800px; max-height: 450px; margin: 0 auto;">
+                                        <?php foreach ($project['images'] as $index => $image): ?>
+                                            <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+                                                <img src="<?= base_url('upload/project/' . $image['url']) ?>" class="d-block w-100" style="object-fit: contain; max-height: 450px;" alt="<?= $project['title'] ?> - Image <?= $index + 1 ?>">
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<?= $project['id'] ?>" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carousel-<?= $project['id'] ?>" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            <?php else: ?>
+                                <img src="https://via.placeholder.com/800x400/2A2A2A/3a86ff?text=No+Image" class="img-fluid rounded mb-4" style="max-width: 800px; max-height: 450px;" alt="No Image">
+                            <?php endif; ?>
+                            <p><?= $project['description'] ?></p>
 
-                    <h6 class="mt-4 mb-3">Tags:</h6>
-                    <div class="modal-tech-stack">
-                        <span class="tech-badge">PHP</span>
-                        <span class="tech-badge">CodeIgniter</span>
-                        <span class="tech-badge">MySQL</span>
-                        <span class="tech-badge">Bootstrap</span>
-                        <span class="tech-badge">JavaScript</span>
+                            <?php if (!empty($project['categories'])): ?>
+                                <h6 class="mt-4 mb-3">Categories:</h6>
+                                <div class="modal-tech-stack">
+                                    <?php foreach ($project['categories'] as $category): ?>
+                                        <span class="tech-badge"><?= $category['name'] ?? 'Category ' . $category['category_id'] ?></span>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
+
+                            <?php if (!empty($project['tags'])): ?>
+                                <h6 class="mt-4 mb-3">Technology Used:</h6>
+                                <div class="modal-tech-stack">
+                                    <?php foreach ($project['tags'] as $tag): ?>
+                                        <span class="tech-badge"><?= $tag['name'] ?? 'Tech ' . $tag['tag_id'] ?></span>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-modal-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-modal-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
-        </div>
-    </div>
-
+        <?php endforeach; ?>
+    <?php endif; ?>
 
     <!-- Skills and Tools Section -->
     <section class="skills-section py-5" id="skills">
         <div class="container">
-            <h2 class="section-heading">Skills and Tools</h2>
+            <h2 class="section-heading mb-5">Skills and Tools</h2>
             <div class="row g-4">
-                <!-- UI/UX Design -->
-                <div class="col-md-6">
-                    <div class="skill-category">
-                        <h5 class="skill-title">UI/UX Design</h5>
-                        <div class="tool-icons">
-                            <div class="tool-icon">
-                                <img src="https://via.placeholder.com/60x60/1A1A1A/CB476E?text=F" alt="Figma">
-                            </div>
-                            <div class="tool-icon">
-                                <img src="https://via.placeholder.com/60x60/1A1A1A/3a86ff?text=C" alt="CodeIgniter">
-                            </div>
-                            <div class="tool-icon">
-                                <img src="https://via.placeholder.com/60x60/1A1A1A/E9ECEF?text=G" alt="GitHub">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Database Management -->
-                <div class="col-md-6">
-                    <div class="skill-category">
-                        <h5 class="skill-title">Database Management</h5>
-                        <div class="tool-icons">
-                            <div class="tool-icon">
-                                <img src="https://via.placeholder.com/60x60/1A1A1A/3a86ff?text=M" alt="MySQL">
-                            </div>
-                            <div class="tool-icon">
-                                <img src="https://via.placeholder.com/60x60/1A1A1A/CB476E?text=C" alt="CodeIgniter">
-                            </div>
-                            <div class="tool-icon">
-                                <img src="https://via.placeholder.com/60x60/1A1A1A/E9ECEF?text=G" alt="GitHub">
+                <?php if (!empty($techStack)): ?>
+                    <?php 
+                    // Group tech stack by type
+                    $groupedTechStack = [];
+                    foreach ($techStack as $tech) {
+                        $type = ucfirst($tech['type'] ?? 'Other');
+                        $groupedTechStack[$type][] = $tech;
+                    }
+                    
+                    // Display each type as a separate card
+                    foreach ($groupedTechStack as $type => $items): 
+                    ?>
+                        <div class="col-md-6">
+                            <div class="skill-category">
+                                <h5 class="skill-title"><?= $type ?></h5>
+                                <div class="tool-icons">
+                                    <?php foreach ($items as $item): ?>
+                                        <div class="tool-icon" title="<?= $item['name'] ?>">
+                                            <?php if (!empty($item['image_url'])): ?>
+                                                <img src="<?= base_url('upload/tech_stack/' . $item['image_url']) ?>" alt="<?= $item['name'] ?>">
+                                            <?php else: ?>
+                                                <span style="color: var(--primary-color); font-weight: 600; font-size: 0.9rem;">
+                                                    <?= strtoupper(substr($item['name'], 0, 2)) ?>
+                                                </span>
+                                            <?php endif; ?>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <!-- Version Control -->
-                <div class="col-md-6">
-                    <div class="skill-category">
-                        <h5 class="skill-title">Version Control</h5>
-                        <div class="tool-icons">
-                            <div class="tool-icon">
-                                <img src="https://via.placeholder.com/60x60/1A1A1A/3a86ff?text=G" alt="GitHub">
-                            </div>
-                            <div class="tool-icon">
-                                <img src="https://via.placeholder.com/60x60/1A1A1A/CB476E?text=C" alt="CodeIgniter">
-                            </div>
-                            <div class="tool-icon">
-                                <img src="https://via.placeholder.com/60x60/1A1A1A/8338ec?text=F" alt="Figma">
-                            </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <!-- Fallback content when no tech stack data is available -->
+                    <div class="col-12">
+                        <div class="skill-category text-center">
+                            <h5 class="skill-title">Skills and Tools</h5>
+                            <p class="text-muted">No skills and tools data available at the moment.</p>
                         </div>
                     </div>
-                </div>
-                <!-- Other Tools -->
-                <div class="col-md-6">
-                    <div class="skill-category">
-                        <h5 class="skill-title">Other Tools</h5>
-                        <div class="tool-icons">
-                            <div class="tool-icon">
-                                <img src="https://via.placeholder.com/60x60/1A1A1A/3a86ff?text=M" alt="MySQL">
-                            </div>
-                            <div class="tool-icon">
-                                <img src="https://via.placeholder.com/60x60/1A1A1A/CB476E?text=C" alt="CodeIgniter">
-                            </div>
-                            <div class="tool-icon">
-                                <img src="https://via.placeholder.com/60x60/1A1A1A/E9ECEF?text=G" alt="GitHub">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php endif; ?>
             </div>
         </div>
     </section>
@@ -1117,12 +1125,12 @@
 
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                
+
                 const targetId = this.getAttribute('href');
                 if (targetId === '#') return;
-                
+
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
                     window.scrollTo({
@@ -1134,4 +1142,5 @@
         });
     </script>
 </body>
+
 </html>

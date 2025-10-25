@@ -79,7 +79,6 @@ class Porto_model extends Model
     {
         return $this->db->table('project_categories')
             ->select('project_id, category_id')
-            ->join('categories', 'categories.id = project_categories.category_id')
             ->where('project_id', $projectId)
             ->get()->getResultArray();
     }
@@ -98,7 +97,6 @@ class Porto_model extends Model
     {
         return $this->db->table('project_tags')
             ->select('project_id, tag_id')
-            ->join('tech_stack', 'tech_stack.id = project_tags.tag_id')
             ->where('project_id', $projectId)
             ->get()->getResultArray();
     }
@@ -111,6 +109,19 @@ class Porto_model extends Model
             ->get()->getResultArray();
     }
 
+    public function getAllProjectData()
+    {
+        $projects = $this->getProjects();
+        
+        foreach ($projects as &$project) {
+            $project['categories'] = $this->getProjectCategories($project['id']);
+            $project['images'] = $this->getProjectImages($project['id']);
+            $project['tags'] = $this->getProjectTags($project['id']);
+        }
+        
+        return $projects;
+    }
+
     public function getAllData()
     {
         return [
@@ -120,8 +131,20 @@ class Porto_model extends Model
             'titles' => $this->getUserTitles(),
             'whatIDo' => $this->getUserWhatIDo(),
             'categories' => $this->getCategories(),
-            'projects' => $this->getProjects(),
+            'projects' => $this->getAllProjectData(),
             'techStack' => $this->getTechStack()
         ];
+    }
+
+    public function getAllProjectDataInOneCall()
+    {
+        $builder = $this->db->table('projects')
+            ->select('projects.id, projects.title, projects.slug, projects.description, projects.demo_link, projects.github_link, projects.featured, projects.published, projects.created_at, projects.updated_at')
+            ->join('project_categories', 'project_categories.project_id = projects.id')
+            ->join('project_images', 'project_images.project_id = projects.id')
+            ->join('project_tags', 'project_tags.project_id = projects.id')
+            ->get()->getResultArray();
+        
+        return $builder;
     }
 }
