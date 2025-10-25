@@ -82,4 +82,6 @@ class Porto_controller extends BaseController
     {
         return $this->response->setJSON($this->model->getAllData());
     }
+
+    
 }
