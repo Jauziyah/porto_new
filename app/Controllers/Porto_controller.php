@@ -20,6 +20,9 @@ class Porto_controller extends BaseController
     {
         $data['profile'] = $this->model->getUserProfile();
         $data['titles'] = $this->model->getUserTitles();
+        $data['socialLinks'] = $this->model->getUserSocialLinks();
+        $data['skills'] = $this->model->getUserSkills();
+        $data['whatIDo'] = $this->model->getUserWhatIDo();
         return view('portofolio/main_layout', $data);
     }
     

@@ -705,7 +705,7 @@
             width: 100%;
             max-width: 500px;
             height: 300px;
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(0, 55, 149, 0.54);
             border-radius: 15px;
             margin-bottom: 30px;
             display: flex;
@@ -714,6 +714,7 @@
             color: var(--gray-color);
             font-size: 1.2rem;
             margin-left: 40px;
+            border: #3a86ff 2px solid;
         }
 
         @media (max-width: 991.98px) {
@@ -768,7 +769,7 @@
                 <!-- Content Column -->
                 <div class="col-lg-6">
                     <div class="hero-image-placeholder d-lg-none">
-                        <img src="<?= base_url('upload/profile/' . ($profile['profile_image'] ?? '')) ?>" alt="<?= $profile['name'] ?? 'Profile Image' ?>" style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px;" />
+                        <img src="<?= base_url('upload/profile/' . ($profile['profile_image'] ?? '')) ?>" alt="<?= $profile['name'] ?? 'Profile Image' ?>" style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s ease;" />
                     </div>
                     <p class="greeting"><?= $profile['greeting'] ?? 'Hallo, Ich bin' ?></p>
                     <h1 class="name"><?= $profile['name'] ?? 'MAULANA EL JAUZIYAH AL GHANI' ?></h1>
@@ -806,24 +807,32 @@
                             <div class="social-links">
                                 <h6 class="section-title">Find me in</h6>
                                 <div class="social-links-container">
-                                    <a href="#" class="social-icon">
-                                        <i class="fab fa-linkedin-in"></i>
-                                    </a>
-                                    <a href="#" class="social-icon">
-                                        <i class="fab fa-github"></i>
-                                    </a>
-                                    <a href="#" class="social-icon">
-                                        <i class="fab fa-instagram"></i>
-                                    </a>
+                                    <?php if (!empty($socialLinks)): ?>
+                                        <?php foreach ($socialLinks as $link): ?>
+                                            <a href="<?= $link['url'] ?>" class="social-icon" target="_blank" rel="noopener noreferrer" title="<?= $link['platform'] ?>">
+                                                <?php if (!empty($link['icon'])): ?>
+                                                    <img src="<?= base_url('upload/profile/' . $link['icon']) ?>" alt="<?= $link['platform'] ?>" style="width: 20px; height: 20px; object-fit: contain;">
+                                                <?php else: ?>
+                                                    <i class="fab fa-<?= strtolower($link['platform']) ?>"></i>
+                                                <?php endif; ?>
+                                            </a>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 mb-4">
                             <div class="skills">
                                 <h6 class="section-title">Best at</h6>
-                                <span class="skill-badge">PHP</span>
-                                <span class="skill-badge">CodeIgniter</span>
-                                <span class="skill-badge">MySQL</span>
+                                <?php if (!empty($skills)): ?>
+                                    <?php foreach ($skills as $skill): ?>
+                                        <span class="skill-badge">
+                                            <?php if (!empty($skill['icon'])): ?>
+                                            <?php endif; ?>
+                                            <?= $skill['name'] ?>
+                                        </span>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -834,7 +843,7 @@
                 <!-- Image Placeholder Column -->
                 <div class="col-lg-6 d-none d-lg-block">
                     <div class="hero-image-placeholder">
-                        <img src="<?= base_url('upload/profile/' . ($profile['profile_image'] ?? '')) ?>" alt="<?= $profile['name'] ?? 'Profile Image' ?>" style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px;" />
+                        <img src="<?= base_url('upload/profile/' . ($profile['profile_image'] ?? '')) ?>" alt="<?= $profile['name'] ?? 'Profile Image' ?>" style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s ease;" />
                     </div>
                 </div>
             </div>
@@ -846,37 +855,27 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h2 class="section-heading">What I Do</h2>
+                    <h2 class="section-heading"><?= $whatIDo['title'] ?? 'What I Do' ?></h2>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-code"></i>
+                <?php if (!empty($whatIDo)): ?>
+                    <?php foreach ($whatIDo as $service): ?>
+                        <div class="col-md-4 mb-4">
+                            <div class="service-card">
+                                <div class="service-icon">
+                                    <?php if (!empty($service['icon'])): ?>
+                                        <img src="<?= base_url('upload/profile/' . $service['icon']) ?>" alt="<?= $service['title'] ?>" style="width: 40px; height: 40px; object-fit: contain;">
+                                    <?php else: ?>
+                                        <i class="fas fa-code"></i>
+                                    <?php endif; ?>
+                                </div>
+                                <h4><?= $service['title'] ?></h4>
+                                <p><?= $service['description'] ?></p>
+                            </div>
                         </div>
-                        <h4>Web Development</h4>
-                        <p>Building responsive and modern web applications using the latest technologies.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-database"></i>
-                        </div>
-                        <h4>Backend Development</h4>
-                        <p>Creating robust server-side solutions with PHP and MySQL databases.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-mobile-alt"></i>
-                        </div>
-                        <h4>Responsive Design</h4>
-                        <p>Ensuring websites look great and function well on all devices.</p>
-                    </div>
-                </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
     </section>
@@ -959,7 +958,7 @@
     <!-- Skills and Tools Section -->
     <section class="skills-section py-5" id="skills">
         <div class="container">
-            <h2 class="section-heading mb-5">Skills and Tools</h2>
+            <h2 class="section-heading">Skills and Tools</h2>
             <div class="row g-4">
                 <!-- UI/UX Design -->
                 <div class="col-md-6">
@@ -1036,7 +1035,7 @@
     <!-- Contact Section -->
     <section class="contact-section py-5" id="contact">
         <div class="container">
-            <h2 class="section-heading mb-5">Get In Touch</h2>
+            <h2 class="section-heading">Get In Touch</h2>
 
             <div class="contact-card mx-auto p-4">
                 <form action="send_email.php" method="POST">
