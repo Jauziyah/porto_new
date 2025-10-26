@@ -147,7 +147,6 @@ class Porto_model extends Model
         
         return $builder;
     }
-
         public function getCertificates($userId = null)
     {
         $builder = $this->db->table('certificates')

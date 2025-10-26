@@ -138,6 +138,10 @@
           <i class="bi bi-gear"></i>
           <span>Setting</span>
         </a>
+        <a href="/pkl" class="nav-link" data-page="settings">
+          <i class="bi bi-gear"></i>
+          <span>Pkl</span>
+        </a>
       </nav>
       
       <nav class="nav flex-column nav-bottom">

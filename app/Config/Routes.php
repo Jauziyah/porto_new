@@ -15,11 +15,6 @@ $routes->post('/login', 'Auth_controller::login');
 // Public image serving
 $routes->get('/tech_stack/(:any)', 'Profile_controller::serveImage/$1');
 
-// Public portfolio pages (display only)
-$routes->get('/content-management', 'Project_controller::page');
-$routes->get('/profile', 'Profile_controller::index');
-$routes->get('/settings', 'Setting_controller::page');
-
 // Test Certificates
 $routes->get('/test-certi', 'Profile_controller::getCertificates');
 
@@ -36,7 +31,7 @@ $routes->get('/api/tech-stack', 'Porto_controller::getTechStack');
 $routes->get('/api/all-data', 'Porto_controller::getAllData');
 
 // Email 
-$routes->post('contact/send_email', 'Contact::send_email'); 
+$routes->post('contact/send_email', 'Contact::send_email');
 
 // Test routes (public) - optional, can be removed in production
 $routes->get('settings-test', 'Setting_controller::index');
@@ -45,8 +40,14 @@ $routes->get('projects-test', 'Project_controller::index');
 $routes->get('projects-test/(:num)', 'Project_controller::show/$1');
 
 // PROTECTED ROUTES (authentication required)
-$routes->group('', ['filter' => 'auth'], function($routes) {
-    
+$routes->group('', ['filter' => 'auth'], function ($routes) {
+
+    // Admin Panel
+    $routes->get('/content-management', 'Project_controller::page');
+    $routes->get('/profile', 'Profile_controller::index');
+    $routes->get('/settings', 'Setting_controller::page');
+    $routes->get('/pkl', 'Pkl_controller::index');
+
     // Authentication
     $routes->get('/logout', 'Auth_controller::logout');
 
