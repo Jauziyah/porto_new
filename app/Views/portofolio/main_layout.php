@@ -1072,26 +1072,67 @@
 
             <!-- Horizontal Scroll Slider -->
             <div class="certificate-slider d-flex overflow-auto pb-3">
-                
-                <!-- Certificate 1 -->
-                <div class="certificate-card me-4 flex-shrink-0">
-                    <img src="https://via.placeholder.com/400x250/2A2A2A/3a86ff?text=Web+Development+Certificate" class="certificate-img mb-3" alt="Web Development Certificate">
-                    <h4>Full Stack Web Development</h4>
-                    <p>Completed comprehensive training in HTML, CSS, JavaScript, React, Node.js, and database management...</p>
-                    <button class="btn btn-detail" data-bs-toggle="modal" data-bs-target="#certificateModal1">View Detail</button>
-                </div>
-
-                <!-- Certificate 2 -->
-                <div class="certificate-card me-4 flex-shrink-0">
-                    <img src="https://via.placeholder.com/400x250/2A2A2A/3a86ff?text=AWS+Certified" class="certificate-img mb-3" alt="AWS Certificate">
-                    <h4>AWS Cloud Practitioner</h4>
-                    <p>Amazon Web Services certification demonstrating cloud computing knowledge and AWS services...</p>
-                    <button class="btn btn-detail" data-bs-toggle="modal" data-bs-target="#certificateModal2">View Detail</button>
-                </div>
-
+                <?php if (!empty($certificates)): ?>
+                    <?php foreach ($certificates as $cert): ?>
+                        <div class="certificate-card me-4 flex-shrink-0">
+                            <?php if (!empty($cert['image_url'])): ?>
+                                <img src="<?= base_url('upload/profile/' . $cert['image_url']) ?>" class="certificate-img mb-3" alt="<?= esc($cert['title']) ?>">
+                            <?php else: ?>
+                                <img src="https://via.placeholder.com/400x250/2A2A2A/3a86ff?text=Certificate" class="certificate-img mb-3" alt="Certificate">
+                            <?php endif; ?>
+                            <h4><?= esc($cert['title']) ?></h4>
+                            <p>
+                                <?php if (!empty($cert['description'])): ?>
+                                    <?= esc(mb_strimwidth($cert['description'], 0, 110, '...')) ?>
+                                <?php else: ?>
+                                    Issued by <?= esc($cert['issued_by'] ?? '-') ?><?php if (!empty($cert['achieved_at'])): ?> • <?= esc(date('Y', strtotime($cert['achieved_at']))) ?><?php endif; ?>
+                                <?php endif; ?>
+                            </p>
+                            <button class="btn btn-detail" data-bs-toggle="modal" data-bs-target="#certificateModal<?= (int)$cert['id'] ?>">View Detail</button>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="text-muted">No certificates yet.</div>
+                <?php endif; ?>
             </div>
         </div>
     </section>
+
+    <?php if (!empty($certificates)): ?>
+        <?php foreach ($certificates as $cert): ?>
+            <div class="modal fade" id="certificateModal<?= (int)$cert['id'] ?>" tabindex="-1" aria-labelledby="certificateModal<?= (int)$cert['id'] ?>Label" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="certificateModal<?= (int)$cert['id'] ?>Label"><?= esc($cert['title']) ?></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <?php if (!empty($cert['image_url'])): ?>
+                                <div class="mb-4">
+                                    <img src="<?= base_url('upload/profile/' . $cert['image_url']) ?>" class="d-block w-100" style="object-fit: contain; max-height: 450px;" alt="<?= esc($cert['title']) ?>">
+                                </div>
+                            <?php endif; ?>
+                            <h6 class="mb-3">Certificate Details:</h6>
+                            <p><strong>Issued By:</strong> <?= esc($cert['issued_by'] ?? '-') ?></p>
+                            <?php if (!empty($cert['achieved_at'])): ?>
+                                <p><strong>Issue Date:</strong> <?= esc(date('F d, Y', strtotime($cert['achieved_at']))) ?></p>
+                            <?php endif; ?>
+                            <?php if (!empty($cert['credential_id'])): ?>
+                                <p><strong>Credential ID:</strong> <?= esc($cert['credential_id']) ?></p>
+                            <?php endif; ?>
+                            <?php if (!empty($cert['description'])): ?>
+                                <p><strong>Description:</strong> <?= esc($cert['description']) ?></p>
+                            <?php endif; ?>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-modal-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
 
     <!-- Skills and Tools Section -->
     <section class="skills-section py-5" id="skills">

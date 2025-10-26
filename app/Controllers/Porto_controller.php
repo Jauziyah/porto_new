@@ -25,6 +25,7 @@ class Porto_controller extends BaseController
         $data['whatIDo'] = $this->model->getUserWhatIDo();
         $data['projects'] = $this->model->getAllProjectData();
         $data['techStack'] = $this->model->getTechStack();
+        $data['certificates'] = $this->model->getCertificates(1);
         return view('portofolio/main_layout', $data);
     }
     

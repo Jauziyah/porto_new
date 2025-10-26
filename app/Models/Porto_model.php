@@ -151,7 +151,7 @@ class Porto_model extends Model
         public function getCertificates($userId = null)
     {
         $builder = $this->db->table('certificates')
-            ->select('id, user_id, title, slug, image_url, description, issued_by, achieved_at, created_at, updated_at');
+            ->select('id, user_id, title, slug, image_url, description, issued_by, achieved_at, credential_id');
         
         if ($userId !== null) {
             $builder->where('user_id', $userId);
