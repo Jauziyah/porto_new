@@ -183,6 +183,7 @@ class Profile_controller extends BaseController
         $description = trim((string) $this->request->getPost('description')) ?: null;
         $issuer = trim((string) $this->request->getPost('issuer'));
         $achievedAt = $this->request->getPost('achieved_at');
+        $credentialId = trim((string) $this->request->getPost('credential_id')) ?: null;
 
         if ($userId <= 0) {
             // Fallback: resolve user_id via username for legacy sessions
@@ -222,6 +223,7 @@ class Profile_controller extends BaseController
             'description' => $description,
             'issued_by' => $issuer,
             'achieved_at' => $achievedAt,
+            'credential_id' => $credentialId,
             'image_url' => $imageUrl,
         ]);
 
@@ -239,7 +241,8 @@ class Profile_controller extends BaseController
         $description = trim((string) $this->request->getPost('description')) ?: null;
         $issuer = trim((string) $this->request->getPost('issuer'));
         $achievedAt = $this->request->getPost('achieved_at');
-
+        $credentialId = trim((string) $this->request->getPost('credential_id')) ?: null;
+        
         if ($title === '' || $slug === '' || $issuer === '' || empty($achievedAt)) {
             return redirect()->back()->with('error', 'Title, issuer, and achieved date are required');
         }
@@ -250,6 +253,7 @@ class Profile_controller extends BaseController
             'description' => $description,
             'issued_by' => $issuer,
             'achieved_at' => $achievedAt,
+            'credential_id' => $credentialId,
         ];
 
         $file = $this->request->getFile('image');

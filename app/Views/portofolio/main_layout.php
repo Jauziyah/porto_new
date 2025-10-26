@@ -139,7 +139,6 @@
         .social-icon:hover {
             background-color: var(--primary-color);
             color: white;
-            transform: translateY(-3px);
         }
 
         .social-icon img {
@@ -163,7 +162,6 @@
         .skill-badge:hover {
             background-color: var(--primary-color);
             color: white;
-            transform: translateY(-2px);
         }
 
         .btn-custom {
@@ -197,7 +195,6 @@
         }
 
         .service-card:hover {
-            transform: translateY(-8px);
             border-color: var(--primary-color);
         }
 
@@ -303,10 +300,9 @@
             width: 100%;
         }
 
-        .btn-detail:hover {
+        /* .btn-detail:hover {
             background-color: var(--secondary-color);
-            transform: translateY(-2px);
-        }
+        } */
 
         /* Modal Styling */
         .modal-content {
@@ -368,7 +364,6 @@
 
         .btn-modal:hover {
             background-color: var(--secondary-color);
-            transform: translateY(-2px);
         }
 
         .btn-modal-secondary {
@@ -383,7 +378,6 @@
 
         .btn-modal-secondary:hover {
             background-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
         }
 
         /* Contact Section */
@@ -437,7 +431,6 @@
 
         .btn-contact:hover {
             background-color: var(--secondary-color);
-            transform: translateY(-3px);
         }
 
         /* Footer */
@@ -756,6 +749,87 @@
                 height: 250px;
             }
         }
+
+        .certificates-section {
+            padding: 80px 0;
+            background-color: var(--dark-color);
+        }
+
+        .certificate-slider {
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) rgba(255, 255, 255, 0.1);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .certificate-slider::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .certificate-slider::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .certificate-slider::-webkit-scrollbar-thumb {
+            background-color: var(--primary-color);
+            border-radius: 10px;
+        }
+
+        .certificate-card {
+            width: 320px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .certificate-card h4 {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .certificate-card p {
+            min-height: 80px;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .certificate-card .btn-detail {
+            height: 40px;
+            margin-top: auto;
+        }
+
+        .certificate-card:hover {
+            border-color: var(--primary-color);
+        }
+
+        .certificate-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 991.98px) {
+            .certificate-card {
+                width: 300px;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .certificate-card {
+                width: 85%;
+                margin: 0 auto 1.5rem;
+            }
+        }
     </style>
 </head>
 
@@ -990,6 +1064,34 @@
             </div>
         <?php endforeach; ?>
     <?php endif; ?>
+
+    <!-- Certificates Section -->
+    <section class="certificates-section" id="certificates">
+        <div class="container">
+            <h2 class="section-heading mb-5">My Certificates & Achievements</h2>
+
+            <!-- Horizontal Scroll Slider -->
+            <div class="certificate-slider d-flex overflow-auto pb-3">
+                
+                <!-- Certificate 1 -->
+                <div class="certificate-card me-4 flex-shrink-0">
+                    <img src="https://via.placeholder.com/400x250/2A2A2A/3a86ff?text=Web+Development+Certificate" class="certificate-img mb-3" alt="Web Development Certificate">
+                    <h4>Full Stack Web Development</h4>
+                    <p>Completed comprehensive training in HTML, CSS, JavaScript, React, Node.js, and database management...</p>
+                    <button class="btn btn-detail" data-bs-toggle="modal" data-bs-target="#certificateModal1">View Detail</button>
+                </div>
+
+                <!-- Certificate 2 -->
+                <div class="certificate-card me-4 flex-shrink-0">
+                    <img src="https://via.placeholder.com/400x250/2A2A2A/3a86ff?text=AWS+Certified" class="certificate-img mb-3" alt="AWS Certificate">
+                    <h4>AWS Cloud Practitioner</h4>
+                    <p>Amazon Web Services certification demonstrating cloud computing knowledge and AWS services...</p>
+                    <button class="btn btn-detail" data-bs-toggle="modal" data-bs-target="#certificateModal2">View Detail</button>
+                </div>
+
+            </div>
+        </div>
+    </section>
 
     <!-- Skills and Tools Section -->
     <section class="skills-section py-5" id="skills">

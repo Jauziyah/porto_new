@@ -147,6 +147,7 @@
                     data-title="<?= esc($cert['title']) ?>"
                     data-description="<?= esc($cert['description'] ?? '') ?>"
                     data-issuer="<?= esc($cert['issued_by'] ?? '') ?>"
+                    data-credential="<?= esc($cert['credential_id'] ?? '') ?>"
                     data-date="<?= esc(!empty($cert['achieved_at']) ? date('Y-m-d', strtotime($cert['achieved_at'])) : '') ?>">
                     Edit
                   </button>
@@ -336,6 +337,10 @@
             <input name="achieved_at" type="date" class="form-control custom-input" id="certificateDate" required>
           </div>
           <div class="mb-3">
+            <label for="certificateCredentialId" class="form-label text-light">Credential ID (optional)</label>
+            <input name="credential_id" type="text" class="form-control custom-input" id="certificateCredentialId" placeholder="Enter credential ID (if any)" maxlength="255">
+          </div>
+          <div class="mb-3">
             <label for="certificateImage" class="form-label text-light">Certificate Image</label>
             <input name="image" type="file" class="form-control custom-input" id="certificateImage" accept="image/*" required>
             <div class="form-text text-info">Upload certificate image (JPG, PNG, etc.)</div>
@@ -361,6 +366,7 @@
       <div class="modal-body">
         <form id="editCertificateForm" method="post" action="#" enctype="multipart/form-data">
           <input type="hidden" id="originalCertificateTitle" value="">
+          <input type="hidden" id="originalCredentialId" value="">
           <div class="mb-3">
             <label for="editCertificateTitle" class="form-label text-light">Title</label>
             <input name="title" type="text" class="form-control custom-input" id="editCertificateTitle" value="" required maxlength="100">
@@ -387,6 +393,10 @@
             <input name="achieved_at" type="date" class="form-control custom-input" id="editCertificateDate" required>
           </div>
           <div class="mb-3">
+            <label for="editCertificateCredentialId" class="form-label text-light">Credential ID (optional)</label>
+            <input name="credential_id" type="text" class="form-control custom-input" id="editCertificateCredentialId" maxlength="255">
+          </div>
+          <div class="mb-3">
             <label for="editCertificateImage" class="form-label text-light">Certificate Image</label>
             <input name="image" type="file" class="form-control custom-input" id="editCertificateImage" accept="image/*">
             <div class="form-text text-info">Leave empty to keep current image</div>
@@ -410,7 +420,9 @@ document.addEventListener('DOMContentLoaded', function() {
   const editCertificateDescription = document.getElementById('editCertificateDescription');
   const editCertificateIssuer = document.getElementById('editCertificateIssuer');
   const editCertificateDate = document.getElementById('editCertificateDate');
+  const editCertificateCredentialId = document.getElementById('editCertificateCredentialId');
   const originalCertificateTitle = document.getElementById('originalCertificateTitle');
+  const originalCredentialId = document.getElementById('originalCredentialId');
   const editTitleCharCount = document.getElementById('editTitleCharCount');
   const editDescriptionCharCount = document.getElementById('editDescriptionCharCount');
   const editIssuerCharCount = document.getElementById('editIssuerCharCount');
@@ -422,6 +434,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const title = btn.getAttribute('data-title') || '';
       const description = btn.getAttribute('data-description') || '';
       const issuer = btn.getAttribute('data-issuer') || '';
+      const credential = btn.getAttribute('data-credential') || '';
       const date = btn.getAttribute('data-date') || '';
       
       // Set form action and populate fields
@@ -430,7 +443,9 @@ document.addEventListener('DOMContentLoaded', function() {
       editCertificateDescription.value = description;
       editCertificateIssuer.value = issuer;
       editCertificateDate.value = date;
+      editCertificateCredentialId.value = credential;
       originalCertificateTitle.value = title;
+      originalCredentialId.value = credential;
       
       // Update character counts
       editTitleCharCount.textContent = title.length;
@@ -446,6 +461,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const certificateDescription = document.getElementById('certificateDescription');
   const certificateIssuer = document.getElementById('certificateIssuer');
   const certificateDate = document.getElementById('certificateDate');
+  const certificateCredentialId = document.getElementById('certificateCredentialId');
   const certificateImage = document.getElementById('certificateImage');
   const titleCharCount = document.getElementById('titleCharCount');
   const descriptionCharCount = document.getElementById('descriptionCharCount');
@@ -471,6 +487,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   certificateDate.addEventListener('change', updateAddCertificateButton);
+  certificateCredentialId.addEventListener('input', updateAddCertificateButton);
   certificateImage.addEventListener('change', updateAddCertificateButton);
 
   function updateAddCertificateButton() {
@@ -502,6 +519,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   editCertificateDate.addEventListener('change', updateEditCertificateButton);
+  editCertificateCredentialId.addEventListener('input', updateEditCertificateButton);
 
   function updateEditCertificateButton() {
     const currentTitle = editCertificateTitle.value.trim();
@@ -516,8 +534,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const descriptionChanged = editCertificateDescription.value !== '';
     const issuerChanged = editCertificateIssuer.value !== '';
     const dateChanged = editCertificateDate.value !== '';
+    const credentialChanged = (editCertificateCredentialId.value.trim() !== originalCredentialId.value.trim());
     
-    const hasChanges = titleChanged || descriptionChanged || issuerChanged || dateChanged;
+    const hasChanges = titleChanged || descriptionChanged || issuerChanged || dateChanged || credentialChanged;
     
     editCertificateBtn.disabled = !(titleValid && issuerValid && dateValid) || !hasChanges;
   }
