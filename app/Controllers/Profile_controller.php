@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Profile_model;
+use App\Models\UserModel;
 use CodeIgniter\Controller;
 
 class Profile_controller extends BaseController
@@ -167,5 +168,136 @@ class Profile_controller extends BaseController
         $this->response->setHeader('Content-Length', filesize($filePath));
 
         return $this->response->sendFile($filePath);
+    }
+
+    public function storeCertificate()
+    {
+        // Authentication removed - filter will handle it
+        helper('url');
+        $model = new Profile_model();
+        $session = session();
+        $userId = (int) ($session->get('user_id') ?? 0);
+
+        $title = trim((string) $this->request->getPost('title'));
+        $slug = $title !== '' ? url_title($title, '-', true) : '';
+        $description = trim((string) $this->request->getPost('description')) ?: null;
+        $issuer = trim((string) $this->request->getPost('issuer'));
+        $achievedAt = $this->request->getPost('achieved_at');
+
+        if ($userId <= 0) {
+            // Fallback: resolve user_id via username for legacy sessions
+            $username = (string) ($session->get('username') ?? '');
+            if ($username !== '') {
+                $userModel = new UserModel();
+                $user = $userModel->getUserByUsername($username);
+                if (!empty($user) && isset($user['id'])) {
+                    $userId = (int) $user['id'];
+                }
+            }
+            if ($userId <= 0) {
+                return redirect()->back()->with('error', 'User session missing. Please re-login.');
+            }
+        }
+
+        if ($title === '' || $slug === '' || $issuer === '' || empty($achievedAt)) {
+            return redirect()->back()->with('error', 'Title, issuer, and achieved date are required');
+        }
+
+        $imageUrl = null;
+        $file = $this->request->getFile('image');
+        if ($file && $file->isValid() && !$file->hasMoved()) {
+            $targetDir = rtrim(FCPATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'upload' . DIRECTORY_SEPARATOR . 'profile' . DIRECTORY_SEPARATOR;
+            if (!is_dir($targetDir)) {
+                @mkdir($targetDir, 0755, true);
+            }
+            $newName = $file->getRandomName();
+            $file->move($targetDir, $newName);
+            $imageUrl = $newName; // store filename only
+        }
+
+        $model->createCertificate([
+            'user_id' => $userId,
+            'title' => $title,
+            'slug' => $slug,
+            'description' => $description,
+            'issued_by' => $issuer,
+            'achieved_at' => $achievedAt,
+            'image_url' => $imageUrl,
+        ]);
+
+        return redirect()->to('/profile/manage');
+    }
+
+    public function updateCertificate($id)
+    {
+        // Authentication removed - filter will handle it
+        helper('url');
+        $model = new Profile_model();
+
+        $title = trim((string) $this->request->getPost('title'));
+        $slug = $title !== '' ? url_title($title, '-', true) : '';
+        $description = trim((string) $this->request->getPost('description')) ?: null;
+        $issuer = trim((string) $this->request->getPost('issuer'));
+        $achievedAt = $this->request->getPost('achieved_at');
+
+        if ($title === '' || $slug === '' || $issuer === '' || empty($achievedAt)) {
+            return redirect()->back()->with('error', 'Title, issuer, and achieved date are required');
+        }
+
+        $updateData = [
+            'title' => $title,
+            'slug' => $slug,
+            'description' => $description,
+            'issued_by' => $issuer,
+            'achieved_at' => $achievedAt,
+        ];
+
+        $file = $this->request->getFile('image');
+        if ($file && $file->isValid() && !$file->hasMoved()) {
+            $targetDir = rtrim(FCPATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'upload' . DIRECTORY_SEPARATOR . 'profile' . DIRECTORY_SEPARATOR;
+            if (!is_dir($targetDir)) {
+                @mkdir($targetDir, 0755, true);
+            }
+            $newName = $file->getRandomName();
+            $file->move($targetDir, $newName);
+            $updateData['image_url'] = $newName; // store filename only
+
+            // delete old image file
+            $old = $model->getCertificateById((int)$id);
+            if (!empty($old['image_url'])) {
+                $oldImagePath = $targetDir . $old['image_url'];
+                if (file_exists($oldImagePath)) {
+                    @unlink($oldImagePath);
+                }
+            }
+        }
+
+        $model->updateCertificateById((int)$id, $updateData);
+        return redirect()->to('/profile/manage');
+    }
+
+    public function deleteCertificate($id)
+    {
+        // Authentication removed - filter will handle it
+        $model = new Profile_model();
+
+        // remove image file if exists
+        $existing = $model->getCertificateById((int)$id);
+        if (!empty($existing['image_url'])) {
+            $targetDir = rtrim(FCPATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'upload' . DIRECTORY_SEPARATOR . 'profile' . DIRECTORY_SEPARATOR;
+            $path = $targetDir . $existing['image_url'];
+            if (file_exists($path)) {
+                @unlink($path);
+            }
+        }
+
+        $model->deleteCertificateById((int)$id);
+        return redirect()->to('/profile/manage');
+    }
+
+    public function getCertificates(){
+        $model = new Profile_model();
+        $certificates = $model->getCertificates();
+        return $this->response->setJSON($certificates);
     }
 }

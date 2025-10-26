@@ -121,6 +121,7 @@ class Profile_model extends Model
         return [
             'categories'  => $this->getCategories(),
             'tech_stacks' => $this->getTechStacks(),
+            'certificates' => $this->getCertificates(),
         ];
     }
 
@@ -134,4 +135,42 @@ class Profile_model extends Model
     {
         return $this->getTechStacks(); // Use existing method
     }
+
+        public function getCertificates($userId = null)
+    {
+        $builder = $this->db->table('certificates')
+            ->select('id, user_id, title, slug, image_url, description, issued_by, achieved_at');
+        
+        if ($userId !== null) {
+            $builder->where('user_id', $userId);
+        }
+        
+        return $builder->orderBy('achieved_at', 'DESC')
+                      ->get()
+                      ->getResultArray();
+    }
+
+    public function getCertificateById(int $id): ?array
+    {
+        return $this->db->table('certificates')
+                        ->where('id', $id)
+                        ->get()
+                        ->getRowArray();
+    }
+
+    public function createCertificate(array $data): bool
+    {
+        return (bool) $this->db->table('certificates')->insert($data);
+    }
+
+    public function updateCertificateById(int $id, array $data): bool
+    {
+        return (bool) $this->db->table('certificates')->where('id', $id)->update($data);
+    }
+
+    public function deleteCertificateById(int $id): bool
+    {
+        return (bool) $this->db->table('certificates')->where('id', $id)->delete();
+    }
+
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\Profile_controller;
 use CodeIgniter\Router\RouteCollection;
 
 /**
@@ -19,6 +20,9 @@ $routes->get('/content-management', 'Project_controller::page');
 $routes->get('/profile', 'Profile_controller::index');
 $routes->get('/settings', 'Setting_controller::page');
 
+// Test Certificates
+$routes->get('/test-certi', 'Profile_controller::getCertificates');
+
 // Public API endpoints
 $routes->get('/api/profile', 'Porto_controller::getUserProfile');
 $routes->get('/api/skills', 'Porto_controller::getUserSkills');
@@ -31,6 +35,7 @@ $routes->get('/api/projects/(:num)', 'Porto_controller::getProjectDetails/$1');
 $routes->get('/api/tech-stack', 'Porto_controller::getTechStack');
 $routes->get('/api/all-data', 'Porto_controller::getAllData');
 
+// Email 
 $routes->post('contact/send_email', 'Contact::send_email'); 
 
 // Test routes (public) - optional, can be removed in production
@@ -57,6 +62,11 @@ $routes->group('', ['filter' => 'auth'], function($routes) {
     $routes->post('/profile/tech', 'Profile_controller::storeTech');
     $routes->post('/profile/tech/(:num)', 'Profile_controller::updateTech/$1');
     $routes->post('/profile/tech/(:num)/delete', 'Profile_controller::deleteTech/$1');
+
+    // Certificates CRUD (Write operations only)
+    $routes->post('/profile/certificates', 'Profile_controller::storeCertificate');
+    $routes->post('/profile/certificates/(:num)', 'Profile_controller::updateCertificate/$1');
+    $routes->post('/profile/certificates/(:num)/delete', 'Profile_controller::deleteCertificate/$1');
 
     // Settings CRUD (Write operations only)
     $routes->post('/settings/user', 'Setting_controller::updateUserBasics');

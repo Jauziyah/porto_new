@@ -147,4 +147,19 @@ class Porto_model extends Model
         
         return $builder;
     }
+
+        public function getCertificates($userId = null)
+    {
+        $builder = $this->db->table('certificates')
+            ->select('id, user_id, title, slug, image_url, description, issued_by, achieved_at, created_at, updated_at');
+        
+        if ($userId !== null) {
+            $builder->where('user_id', $userId);
+        }
+        
+        return $builder->orderBy('achieved_at', 'DESC')
+                      ->get()
+                      ->getResultArray();
+    }
+    
 }
