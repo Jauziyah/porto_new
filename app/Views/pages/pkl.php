@@ -73,7 +73,7 @@
 <!-- Add New PKL Modal -->
 <div class="modal fade" id="addPklModal" tabindex="-1" aria-labelledby="addPklModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content custom-modal">
+    <div class="modal-content custom-modal" style="background: linear-gradient(165deg, #17181d, #101114);">
       <div class="modal-header border-secondary">
         <h5 class="modal-title text-light" id="addPklModalLabel">Add PKL Entry</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -82,11 +82,17 @@
         <form method="post" action="<?= site_url('/pkl') ?>" enctype="multipart/form-data" id="addPklForm">
           <div class="mb-3">
             <label for="pklTitle" class="form-label text-light">Title</label>
-            <input type="text" class="form-control custom-input" id="pklTitle" name="title" placeholder="Enter title" required>
+            <input type="text" class="form-control custom-input" id="pklTitle" name="title" placeholder="Enter title" required maxlength="100">
+            <div class="form-text text-warning">
+              <span id="pklTitleCharCount">0</span>/100 characters
+            </div>
           </div>
           <div class="mb-3">
             <label for="pklDescription" class="form-label text-light">Description</label>
-            <textarea class="form-control custom-input" id="pklDescription" name="description" placeholder="Enter description" rows="3"></textarea>
+            <textarea class="form-control custom-input" id="pklDescription" name="description" placeholder="Enter description" rows="3" maxlength="255"></textarea>
+            <div class="form-text text-warning">
+              <span id="pklDescriptionCharCount">0</span>/255 characters
+            </div>
           </div>
           <div class="mb-3">
             <label for="pklImage" class="form-label text-light">Image</label>
@@ -97,6 +103,7 @@
           </div>
         </form>
       </div>
+      <div class="modal-footer border-secondary"></div>
     </div>
   </div>
 </div>
@@ -136,9 +143,25 @@
     const addPklForm = document.getElementById('addPklForm');
     const addPklSave = document.getElementById('addPklSave');
     if (addPklForm && addPklSave) {
-      const inputs = addPklForm.querySelectorAll('input, textarea, select');
-      function checkAdd() { toggleButtonState(addPklSave, !hasEmptyRequiredFields(addPklForm)); }
+      const pklTitle = document.getElementById('pklTitle');
+      const pklDescription = document.getElementById('pklDescription');
+      const titleCountEl = document.getElementById('pklTitleCharCount');
+      const descCountEl = document.getElementById('pklDescriptionCharCount');
+
+      function updateCounts() {
+        if (titleCountEl && pklTitle) titleCountEl.textContent = pklTitle.value.length;
+        if (descCountEl && pklDescription) descCountEl.textContent = pklDescription.value.length;
+      }
+
+      function checkAdd() {
+        const isValid = !hasEmptyRequiredFields(addPklForm);
+        toggleButtonState(addPklSave, isValid);
+        updateCounts();
+      }
+
       checkAdd();
+
+      const inputs = addPklForm.querySelectorAll('input, textarea, select');
       inputs.forEach(inp => {
         inp.addEventListener('input', checkAdd);
         inp.addEventListener('change', checkAdd);

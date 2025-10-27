@@ -161,4 +161,17 @@ class Porto_model extends Model
                       ->getResultArray();
     }
     
+    public function getPkl($userId = null)
+    {
+        $builder = $this->db->table('pkl')
+            ->select('id, user_id, title, description, image_url');
+        
+        if ($userId !== null) {
+            $builder->where('user_id', $userId);
+        }
+        
+        return $builder->orderBy('id', 'ASC')
+                       ->get()
+                       ->getResultArray();
+    }
 }

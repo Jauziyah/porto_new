@@ -29,7 +29,6 @@ class Auth_controller extends Controller{
         if ($user && $user['password'] === $password) {
             $session->set('isLoggedIn', true);
             $session->set('username', $user['username']);
-            // Store user ID for FK usage (e.g., certificates.user_id)
             if (isset($user['id'])) {
                 $session->set('user_id', (int)$user['id']);
             }

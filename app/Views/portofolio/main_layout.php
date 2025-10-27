@@ -752,7 +752,7 @@
 
         .certificates-section {
             padding: 80px 0;
-            background-color: var(--dark-color);
+            background-color: rgba(255, 255, 255, 0.03);;
         }
 
         .certificate-slider {
@@ -830,6 +830,19 @@
                 margin: 0 auto 1.5rem;
             }
         }
+
+        .carousel-control-prev-icon,
+.carousel-control-next-icon {
+  display: none;
+}
+
+.carousel-indicators {
+  display: none !important;
+}
+
+.skills-section{
+    background-color:  rgba(255, 255, 255, 0.03);;
+}
     </style>
 </head>
 
@@ -844,7 +857,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#home">HOME</a>
+                        <a class="nav-link" href="#home">HOME</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#about">ABOUT ME</a>
@@ -1098,6 +1111,7 @@
         </div>
     </section>
 
+    <!-- Certificate Modal -->
     <?php if (!empty($certificates)): ?>
         <?php foreach ($certificates as $cert): ?>
             <div class="modal fade" id="certificateModal<?= (int)$cert['id'] ?>" tabindex="-1" aria-labelledby="certificateModal<?= (int)$cert['id'] ?>Label" aria-hidden="true">
@@ -1133,6 +1147,69 @@
             </div>
         <?php endforeach; ?>
     <?php endif; ?>
+    
+    <!-- Special Section, PKL -->
+    <section class="pkl-section py-5" id="pkl">
+        <div class="container">
+            <h2 class="section-heading mb-4">PKL</h2>
+
+            <?php if (!empty($pkl)): ?>
+                <div id="pklCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <?php if (count($pkl) > 1): ?>
+                        <div class="carousel-indicators">
+                            <?php foreach (array_values($pkl) as $i => $unused): ?>
+                                <button type="button" data-bs-target="#pklCarousel" data-bs-slide-to="<?= (int)$i ?>" class="<?= $i === 0 ? 'active' : '' ?>" aria-current="<?= $i === 0 ? 'true' : 'false' ?>" aria-label="Slide <?= (int)($i+1) ?>"></button>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="carousel-inner">
+                        <?php $idx = 0; foreach ($pkl as $item): ?>
+                            <div class="carousel-item <?= $idx === 0 ? 'active' : '' ?>">
+                                <div class="row align-items-center g-4">
+                                    <div class="col-md-5">
+                                        <div class="card profile-card text-light rounded-4 overflow-hidden shadow w-100">
+                                            <div class="image-container d-flex align-items-center justify-content-center" style="height: 280px;">
+                                                <?php if (!empty($item['image_url'])): ?>
+                                                    <img src="<?= base_url('upload/pkl/' . $item['image_url']) ?>" alt="<?= esc($item['title'] ?? 'PKL Image') ?>" class="d-block w-100" style="object-fit: cover; height: 100%;">
+                                                <?php else: ?>
+                                                    <div class="placeholder-content">
+                                                        <i class="fas fa-image fa-2x mb-2 opacity-50"></i>
+                                                        <div class="fw-semibold opacity-75 text-white">No Image</div>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <h3 class="mb-3"><?= esc($item['title'] ?? '') ?></h3>
+                                        <?php if (!empty($item['description'])): ?>
+                                            <p class="text-muted"><?= esc($item['description']) ?></p>
+                                        <?php else: ?>
+                                            <p class="text-muted">No description provided.</p>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php $idx++; endforeach; ?>
+                    </div>
+
+                    <?php if (count($pkl) > 1): ?>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#pklCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#pklCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    <?php endif; ?>
+                </div>
+            <?php else: ?>
+                <div class="text-muted">No PKL entries yet.</div>
+            <?php endif; ?>
+        </div>
+    </section>
 
     <!-- Skills and Tools Section -->
     <section class="skills-section py-5" id="skills">
