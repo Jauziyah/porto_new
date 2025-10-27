@@ -47,6 +47,10 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/profile', 'Profile_controller::index');
     $routes->get('/settings', 'Setting_controller::page');
     $routes->get('/pkl', 'Pkl_controller::index');
+    // PKL CRUD (Write operations only)
+    $routes->post('/pkl', 'Pkl_controller::store');
+    $routes->post('/pkl/(:num)', 'Pkl_controller::update/$1');
+    $routes->post('/pkl/(:num)/delete', 'Pkl_controller::delete/$1');
 
     // Authentication
     $routes->get('/logout', 'Auth_controller::logout');
