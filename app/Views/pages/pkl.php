@@ -9,7 +9,14 @@
 
   <?php if (!empty($pkl_list)): ?>
     <?php foreach ($pkl_list as $p): ?>
-      <h5 class="text-light mb-3"><?= htmlspecialchars($p['title'] ?? '') ?></h5>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="text-light mb-0"><?= htmlspecialchars($p['title'] ?? '') ?></h5>
+        <form action="<?= site_url('/pkl/' . (int)($p['id'] ?? 0) . '/delete') ?>" method="post">
+          <button class="btn btn-sm btn-outline-danger btn-delete" type="submit">
+            <i class="fas fa-trash-alt"></i> Delete
+          </button>
+        </form>
+      </div>
 
       <div class="card custom-container-card rounded-4 p-4 border border-secondary mb-4">
         <div class="row g-3">
@@ -52,11 +59,7 @@
             </div>
           </div>
 
-          <div class="col-md-6 d-flex align-items-end">
-            <form action="<?= site_url('/pkl/' . (int)($p['id'] ?? 0) . '/delete') ?>" method="post">
-              <button type="submit" class="btn btn-danger btn-delete">Delete</button>
-            </form>
-          </div>
+          
         </div>
       </div>
     <?php endforeach; ?>

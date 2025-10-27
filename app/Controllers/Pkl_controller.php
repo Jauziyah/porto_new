@@ -86,15 +86,15 @@ class Pkl_controller extends BaseController{
             return redirect()->back()->with('error', 'Item not found');
         }
 
-        $title = trim((string) $this->request->getPost('title'));
-        $description = $this->request->getPost('description');
+        $titlePost = $this->request->getPost('title');
+        $descriptionPost = $this->request->getPost('description');
         $updateData = [];
 
-        if ($title !== null) {
-            $updateData['title'] = $title;
+        if ($titlePost !== null) {
+            $updateData['title'] = trim((string)$titlePost);
         }
-        if ($description !== null) {
-            $updateData['description'] = trim((string)$description);
+        if ($descriptionPost !== null) {
+            $updateData['description'] = trim((string)$descriptionPost);
         }
 
         $file = $this->request->getFile('image');
