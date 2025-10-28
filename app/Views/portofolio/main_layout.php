@@ -142,8 +142,8 @@
         }
 
         .social-icon img {
-            width: 20px;
-            height: 20px;
+            width: 30px;
+            height: 30px;
             object-fit: contain;
         }
 
@@ -525,8 +525,8 @@
         /* Hero image */
         .hero-image {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
+            object-fit: contain;
             border-radius: 15px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
@@ -723,7 +723,7 @@
         .hero-image-placeholder {
             width: 100%;
             max-width: 500px;
-            height: 300px;
+            height: auto;
             background-color: rgba(0, 55, 149, 0.54);
             border-radius: 15px;
             margin-bottom: 30px;
@@ -746,7 +746,7 @@
             .hero-image-placeholder {
                 order: -1;
                 margin-bottom: 20px;
-                height: 250px;
+                height: auto;
             }
         }
 

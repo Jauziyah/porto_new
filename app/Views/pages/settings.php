@@ -95,8 +95,8 @@
       <div class="col-md-6">
         <label class="form-label text-white-50 small">Profile Image</label>
         <div class="d-flex flex-column gap-2">
-          <div class="card profile-card text-light rounded-4 overflow-hidden shadow" style="max-width: 260px;">
-            <div class="image-container d-flex align-items-center justify-content-center" style="height: 140px;">
+          <div class="card profile-card text-light rounded-4 overflow-hidden shadow">
+            <div class="image-container d-flex align-items-center justify-content-center">
               <?php if (!empty($user['profile_image'])): ?>
                 <img id="profileImagePreview" src="<?= base_url('/upload/profile/' . $user['profile_image']) ?>" alt="profile image" class="card-image" />
                 <div class="image-overlay"></div>
@@ -372,10 +372,6 @@
             <input type="text" class="form-control custom-input" id="skillName" name="name" placeholder="Enter skill name" required>
           </div>
           <div class="mb-3">
-            <label for="skillCategory" class="form-label text-light">Category</label>
-            <input type="text" class="form-control custom-input" id="skillCategory" placeholder="e.g., PHP Framework, Database System" disabled>
-          </div>
-          <div class="mb-3">
             <label for="skillImage" class="form-label text-light">Icon/Image</label>
             <input type="file" class="form-control custom-input" id="skillImage" name="image" accept="image/*">
           </div>
@@ -402,10 +398,6 @@
           <div class="mb-3">
             <label for="editSkillName" class="form-label text-light">Skill Name</label>
             <input type="text" class="form-control custom-input" id="editSkillName" name="name" required>
-          </div>
-          <div class="mb-3">
-            <label for="editSkillCategory" class="form-label text-light">Category</label>
-            <input type="text" class="form-control custom-input" id="editSkillCategory" value="" disabled>
           </div>
           <div class="mb-3">
             <label for="editSkillImage" class="form-label text-light">Icon/Image</label>

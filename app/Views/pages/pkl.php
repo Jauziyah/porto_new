@@ -82,9 +82,9 @@
         <form method="post" action="<?= site_url('/pkl') ?>" enctype="multipart/form-data" id="addPklForm">
           <div class="mb-3">
             <label for="pklTitle" class="form-label text-light">Title</label>
-            <input type="text" class="form-control custom-input" id="pklTitle" name="title" placeholder="Enter title" required maxlength="100">
+            <input type="text" class="form-control custom-input" id="pklTitle" name="title" placeholder="Enter title" required maxlength="255">
             <div class="form-text text-warning">
-              <span id="pklTitleCharCount">0</span>/100 characters
+              <span id="pklTitleCharCount">0</span>/255 characters
             </div>
           </div>
           <div class="mb-3">
