@@ -16,53 +16,60 @@ class Setting_model extends Model
 
     public function getUserData($userId = null)
     {
-        $builder = $this->db->table('users u')
-            ->select(
-                'u.*, 
-                 GROUP_CONCAT(DISTINCT ut.title) as titles,
-                 GROUP_CONCAT(DISTINCT usl.id, "|", usl.platform, "|", usl.url, "|", IFNULL(usl.icon, "")) as social_links,
-                 GROUP_CONCAT(DISTINCT usk.id, "|", usk.name, "|", IFNULL(usk.icon, "")) as skills,
-                 GROUP_CONCAT(DISTINCT uw.id, "|", uw.title, "|", IFNULL(uw.description, ""), "|", IFNULL(uw.icon, "")) as what_i_do'
-            )
-            ->join('user_titles ut', 'ut.user_id = u.id', 'left')
-            ->join('user_social_links usl', 'usl.user_id = u.id', 'left')
-            ->join('user_skills usk', 'usk.user_id = u.id', 'left')
-            ->join('user_what_i_do uw', 'uw.user_id = u.id', 'left')
-            ->groupBy('u.id');
-
+        // Return bare user row(s) only; related metadata fetched via dedicated getters
         if ($userId !== null) {
-            $builder->where('u.id', $userId);
-            return $builder->get()->getRowArray();
+            return $this->db->table('users')
+                            ->where('id', (int) $userId)
+                            ->get()
+                            ->getRowArray();
         }
 
-        return $builder->get()->getResultArray();
+        return $this->db->table('users')
+                        ->get()
+                        ->getResultArray();
     }
 
         // ADD THESE NEW METHODS FOR PUBLIC API
-    public function getWhatIDoData()
+    public function getWhatIDoData(int $userId = 1)
     {
         return $this->db->table('user_what_i_do')
                         ->select('id, title, description, icon')
-                        ->where('user_id', 1)
+                        ->where('user_id', $userId)
+                        ->orderBy('id', 'asc')
                         ->get()
                         ->getResultArray();
     }
 
-    public function getSocialLinksData()
+    public function getSocialLinksData(int $userId = 1)
     {
         return $this->db->table('user_social_links')
                         ->select('id, platform, url, icon')
-                        ->where('user_id', 1)
+                        ->where('user_id', $userId)
+                        ->orderBy('id', 'asc')
                         ->get()
                         ->getResultArray();
     }
 
-    public function getSkillsData()
+    public function getSkillsData(int $userId = 1)
     {
         return $this->db->table('user_skills')
                         ->select('id, name, icon')
-                        ->where('user_id', 1)
+                        ->where('user_id', $userId)
+                        ->orderBy('id', 'asc')
                         ->get()
                         ->getResultArray();
+    }
+
+    public function getUserTitles(int $userId = 1): array
+    {
+        $rows = $this->db->table('user_titles')
+                         ->select('title')
+                         ->where('user_id', $userId)
+                         ->orderBy('id', 'asc')
+                         ->get()
+                         ->getResultArray();
+        return array_map(static function ($row) {
+            return $row['title'];
+        }, $rows);
     }
 }

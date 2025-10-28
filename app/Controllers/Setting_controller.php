@@ -26,11 +26,11 @@ class Setting_controller extends BaseController
             return $this->failNotFound('User not found');
         }
 
-        // Transform grouped strings into arrays (optional prettification)
-        $user['titles'] = $this->splitCommaString($user['titles']);
-        $user['social_links'] = $this->parseSocialLinks($user['social_links']);
-        $user['skills'] = $this->parseSkills($user['skills']);
-        $user['what_i_do'] = $this->parseWhatIDo($user['what_i_do']);
+        // Attach related resources using dedicated getters
+        $user['titles'] = $model->getUserTitles((int)($user['id'] ?? 1));
+        $user['social_links'] = $model->getSocialLinksData((int)($user['id'] ?? 1));
+        $user['skills'] = $model->getSkillsData((int)($user['id'] ?? 1));
+        $user['what_i_do'] = $model->getWhatIDoData((int)($user['id'] ?? 1));
 
         return $this->respond($user);
     }
@@ -69,73 +69,16 @@ class Setting_controller extends BaseController
 
         $data = [
             'user' => $user,
-            'titles_list' => $this->splitCommaString($user['titles'] ?? ''),
-            'social_links_list' => $this->parseSocialLinks($user['social_links'] ?? ''),
-            'skills_list' => $this->parseSkills($user['skills'] ?? ''),
-            'what_i_do_list' => $this->parseWhatIDo($user['what_i_do'] ?? ''),
+            'titles_list' => $model->getUserTitles((int)($user['id'] ?? 1)),
+            'social_links_list' => $model->getSocialLinksData((int)($user['id'] ?? 1)),
+            'skills_list' => $model->getSkillsData((int)($user['id'] ?? 1)),
+            'what_i_do_list' => $model->getWhatIDoData((int)($user['id'] ?? 1)),
         ];
 
         return view('pages/settings', $data);
     }
 
-    // --- Helper formatting methods --- //
-    private function splitCommaString($str)
-    {
-        return $str ? explode(',', $str) : [];
-    }
-
-    private function parseSocialLinks($str)
-    {
-        if (!$str) return [];
-        $items = explode(',', $str);
-        $result = [];
-        foreach ($items as $item) {
-            $p = explode('|', $item);
-            if (!isset($p[1])) continue;
-            $result[] = [
-                'id' => isset($p[0]) && $p[0] !== '' ? (int)$p[0] : null,
-                'platform' => $p[1] ?? null,
-                'url' => $p[2] ?? null,
-                'icon' => $p[3] ?? null,
-            ];
-        }
-        return $result;
-    }
-
-    private function parseSkills($str)
-    {
-        if (!$str) return [];
-        $items = explode(',', $str);
-        $result = [];
-        foreach ($items as $item) {
-            $p = explode('|', $item);
-            if (!isset($p[1])) continue;
-            $result[] = [
-                'id' => isset($p[0]) && $p[0] !== '' ? (int)$p[0] : null,
-                'name' => $p[1] ?? null,
-                'icon' => $p[2] ?? null,
-            ];
-        }
-        return $result;
-    }
-
-    private function parseWhatIDo($str)
-    {
-        if (!$str) return [];
-        $items = explode(',', $str);
-        $result = [];
-        foreach ($items as $item) {
-            $p = explode('|', $item);
-            if (!isset($p[1])) continue;
-            $result[] = [
-                'id' => isset($p[0]) && $p[0] !== '' ? (int)$p[0] : null,
-                'title' => $p[1] ?? null,
-                'description' => $p[2] ?? null,
-                'icon' => $p[3] ?? null,
-            ];
-        }
-        return $result;
-    }
+    // Formatting helpers removed after simplifying data flow
 
     // --- CRUD: User basics --- //
     public function updateUserBasics()

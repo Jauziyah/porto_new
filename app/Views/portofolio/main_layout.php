@@ -186,28 +186,63 @@
         }
 
         .service-card {
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 24px;
+            background-color: rgba(255, 255, 255, 0.03);
+            padding: 30px 25px;
+            border-radius: 15px;
+            height: 100%;
             transition: all 0.3s ease;
-            color: var(--text-color);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            min-height: 350px; /* Set a minimum height for all cards */
         }
 
         .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             border-color: var(--primary-color);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin: 0 0 1.5rem;
+            flex: 0 0 auto;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .service-card h4 {
+            flex: 0 0 auto;
+            min-height: 3.5rem;
+            margin: 0.5rem 0 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 10px;
+        }
+        
+        .service-card p {
+            flex: 1;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            line-height: 1.6;
         }
 
         .icon-container {
             width: 80px;
             height: 80px;
-            margin: 0 auto 15px;
+            margin: 0;
             border-radius: 12px;
             background-color: rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            transition: all 0.3s ease;
         }
 
         .icon-container img {
@@ -475,244 +510,506 @@
         }
 
         .tool-icons {
-            display: flex;
-            gap: 14px;
-            flex-wrap: wrap;
-        }
-
-        .tool-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 10px;
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .tool-icon img {
-            width: 36px;
-            height: 36px;
-            object-fit: contain;
-        }
-
-        /* Title belt animation */
-        .title-belt-container {
-            overflow: hidden;
-        }
-
-        .title-belt {
-            display: flex;
-            animation: scrollTitles 20s linear infinite;
-        }
-
-        .title-item {
-            flex-shrink: 0;
-            padding: 0 20px;
-        }
-
-        @keyframes scrollTitles {
-            0% {
-                transform: translateX(0);
-            }
-
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-
-        /* Hero image */
-        .hero-image {
-            width: 100%;
-            height: auto;
-            object-fit: contain;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        /* Tablet View Optimizations (768px - 991px) */
-        @media (min-width: 768px) and (max-width: 991.98px) {
-
-            /* Hero Section Tablet Fixes */
-            .hero-section {
-                padding: 90px 0 70px;
-            }
-
-            .hero-section .row {
-                flex-direction: column-reverse;
-                text-align: center;
-            }
-
-            .name {
-                font-size: 2.8rem;
                 margin-bottom: 15px;
             }
 
-            .title {
-                font-size: 1.6rem;
-                margin-bottom: 25px;
+            .btn-detail {
+                background-color: var(--accent-color);
+                color: white;
+                padding: 10px 20px;
+                border-radius: 30px;
+                border: none;
+                transition: all 0.3s ease;
+                font-weight: 500;
+                font-size: 0.9rem;
+                width: 100%;
             }
 
-            .description {
-                font-size: 1.1rem;
-                max-width: 85%;
-                margin-left: auto;
-                margin-right: auto;
-                margin-bottom: 35px;
+            /* .btn-detail:hover {
+                background-color: var(--secondary-color);
+            } */
+
+            /* Modal Styling */
+            .modal-content {
+                background-color: var(--dark-color);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 15px;
             }
 
-            .social-links-container {
+            .modal-header {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                padding: 25px 30px 15px;
+            }
+
+            .modal-title {
+                color: var(--text-color);
+                font-weight: 600;
+                font-size: 1.5rem;
+            }
+
+            .btn-close {
+                filter: invert(1) grayscale(100%) brightness(200%);
+            }
+
+            .modal-body {
+                padding: 25px 30px;
+                color: var(--text-color);
+            }
+
+            .modal-tech-stack {
                 display: flex;
-                justify-content: center;
-                margin-bottom: 25px;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin: 20px 0;
             }
 
-            .social-links,
-            .skills {
-                text-align: center;
-                margin-bottom: 25px;
+            .tech-badge {
+                background-color: rgba(255, 255, 255, 0.1);
+                color: var(--text-color);
+                padding: 6px 15px;
+                border-radius: 20px;
+                font-size: 0.85rem;
+                font-weight: 500;
             }
 
-            .social-icon {
-                margin: 0 10px 10px;
+            .modal-footer {
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                padding: 15px 30px 25px;
             }
 
-            .skill-badge {
-                margin: 0 8px 12px;
+            .btn-modal {
+                background-color: var(--primary-color);
+                color: white;
+                padding: 10px 25px;
+                border-radius: 30px;
+                border: none;
+                transition: all 0.3s ease;
+                font-weight: 500;
             }
 
-            .btn-custom {
-                padding: 14px 35px;
-                font-size: 1.05rem;
+            .btn-modal:hover {
+                background-color: var(--secondary-color);
             }
 
-            /* Services Section */
-            .service-card {
-                padding: 25px;
-                margin-bottom: 25px;
+            .btn-modal-secondary {
+                background-color: rgba(255, 255, 255, 0.1);
+                color: var(--text-color);
+                padding: 10px 25px;
+                border-radius: 30px;
+                border: none;
+                transition: all 0.3s ease;
+                font-weight: 500;
             }
 
-            .service-icon {
-                font-size: 2.3rem;
+            .btn-modal-secondary:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+
+            /* Contact Section */
+            .contact-section {
+                padding: 80px 0;
+                background-color: var(--dark-color);
+            }
+
+            .contact-card {
+                background-color: rgba(255, 255, 255, 0.05);
+                max-width: 700px;
+                border-radius: 15px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                padding: 40px;
+                transition: all 0.3s ease;
+            }
+
+            .contact-card:hover {
+                border-color: var(--primary-color);
+            }
+
+            .form-label {
+                color: var(--text-color);
+                font-weight: 500;
+            }
+
+            .form-control {
+                background-color: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                color: var(--text-color);
+                border-radius: 8px;
+                transition: all 0.3s ease;
+            }
+
+            .form-control:focus {
+                border-color: var(--primary-color);
+                box-shadow: none;
+                background-color: rgba(255, 255, 255, 0.15);
+                color: var(--text-color);
+            }
+
+            .btn-contact {
+                background-color: var(--accent-color);
+                color: white;
+                padding: 12px 40px;
+                border-radius: 30px;
+                border: none;
+                transition: all 0.3s ease;
+                font-weight: 600;
+            }
+
+            .btn-contact:hover {
+                background-color: var(--secondary-color);
+            }
+
+            /* Footer */
+            .footer {
+                background-color: rgba(0, 0, 0, 0.2);
+                padding: 40px 0;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            /* Headings */
+            .section-heading {
+                font-weight: 700;
+                color: var(--text-color);
+                margin-bottom: 50px;
+                font-size: 2.5rem;
+                letter-spacing: 0.5px;
             }
 
             /* Projects Section */
-            .project-card {
-                width: 300px;
-            }
-
-            .carousel-inner img {
-                height: 400px;
+            .projects-section {
+                padding: 80px 0;
+                background-color: var(--dark-color);
             }
 
             /* Skills Section */
             .skill-category {
-                padding: 22px;
-                margin-bottom: 20px;
+                background-color: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 12px;
+                padding: 24px;
+                transition: all 0.3s ease;
+            }
+
+            .skill-category:hover {
+                border-color: var(--primary-color);
+            }
+
+            .skill-title {
+                color: var(--text-color);
+                font-weight: 600;
+                margin-bottom: 15px;
             }
 
             .tool-icons {
-                gap: 12px;
-                justify-content: center;
+                display: flex;
+                gap: 14px;
+                flex-wrap: wrap;
             }
 
             .tool-icon {
-                width: 62px;
-                height: 62px;
-            }
-
-            /* Contact Section */
-            .contact-card {
-                padding: 35px 30px;
-            }
-
-            /* General */
-            .section-heading {
-                font-size: 2.4rem;
-                margin-bottom: 45px;
-            }
-        }
-
-        /* Mobile Styles */
-        @media (max-width: 767.98px) {
-            .hero-section {
-                padding: 80px 0 60px;
-                text-align: center;
-            }
-
-            .name {
-                font-size: 2.2rem;
-            }
-
-            .description {
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-
-            .project-card {
-                width: 85%;
-                margin: 0 auto 1.5rem;
-            }
-
-            .carousel-inner img {
-                height: 300px;
-            }
-
-            .skill-category {
-                text-align: center;
-                margin-bottom: 25px;
-            }
-
-            .tool-icons {
+                width: 80px;
+                height: 80px;
+                border-radius: 12px;
+                background-color: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                display: flex;
+                align-items: center;
                 justify-content: center;
-            }
-
-            .contact-card {
-                padding: 30px 20px;
-            }
-
-            .section-heading {
-                font-size: 2.2rem;
-            }
-        }
-
-        @media (max-width: 575.98px) {
-            .name {
-                font-size: 1.8rem;
-            }
-
-            .title {
-                font-size: 1.3rem;
-            }
-
-            .hero-section {
-                padding: 60px 0 40px;
-            }
-
-
-            .section-heading {
-                font-size: 2rem;
-            }
-
-            .tool-icons {
-                gap: 10px;
-            }
-
-            .tool-icon {
-                width: 55px;
-                height: 55px;
             }
 
             .tool-icon img {
-                width: 35px;
-                height: 35px;
+                width: 48px;
+                height: 48px;
+                object-fit: contain;
             }
 
-            .skill-category {
+            /* Title belt animation */
+            .title-belt-container {
+                overflow: hidden;
+            }
+
+            .title-belt {
+                display: flex;
+                animation: scrollTitles 20s linear infinite;
+            }
+
+            .title-item {
+                flex-shrink: 0;
+                padding: 0 20px;
+            }
+
+            @keyframes scrollTitles {
+                0% {
+                    transform: translateX(0);
+                }
+
+                100% {
+                    transform: translateX(-50%);
+                }
+            }
+
+            /* Hero image */
+            .hero-image {
+                width: 100%;
+                height: auto;
+                object-fit: contain;
+                border-radius: 15px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                transition: all 0.3s ease;
+            }
+
+            /* Tablet View Optimizations (768px - 991px) */
+            @media (min-width: 768px) and (max-width: 991.98px) {
+
+                /* Hero Section Tablet Fixes */
+                .hero-section {
+                    padding: 90px 0 70px;
+                }
+
+                .hero-section .row {
+                    flex-direction: column-reverse;
+                    text-align: center;
+                }
+
+                .name {
+                    font-size: 2.8rem;
+                    margin-bottom: 15px;
+                }
+
+                .title {
+                    font-size: 1.6rem;
+                    margin-bottom: 25px;
+                }
+
+                .description {
+                    font-size: 1.1rem;
+                    max-width: 85%;
+                    margin-left: auto;
+                    margin-right: auto;
+                    margin-bottom: 35px;
+                }
+
+                .social-links-container {
+                    display: flex;
+                    justify-content: center;
+                    margin-bottom: 25px;
+                }
+
+                .social-links,
+                .skills {
+                    text-align: center;
+                    margin-bottom: 25px;
+                }
+
+                .social-icon {
+                    margin: 0 10px 10px;
+                }
+
+                .skill-badge {
+                    margin: 0 8px 12px;
+                }
+
+                .btn-custom {
+                    padding: 14px 35px;
+                    font-size: 1.05rem;
+                }
+
+                /* Services Section */
+                .service-card {
+                    padding: 25px;
+                    margin-bottom: 25px;
+                }
+
+                .service-icon {
+                    font-size: 2.3rem;
+                }
+
+                /* Projects Section */
+                .project-card {
+                    width: 300px;
+                }
+
+                .carousel-inner img {
+                    height: 400px;
+                }
+
+                /* Skills Section */
+                .skill-category {
+                    padding: 22px;
+                    margin-bottom: 20px;
+                }
+
+                .tool-icons {
+                    gap: 12px;
+                    justify-content: center;
+                }
+
+                .tool-icon {
+                    width: 75px;
+                    height: 75px;
+                }
+
+                /* Contact Section */
+                .contact-card {
+                    padding: 35px 30px;
+                }
+
+                /* General */
+                .section-heading {
+                    font-size: 2.4rem;
+                    margin-bottom: 45px;
+                }
+            }
+
+            /* Mobile Styles */
+            @media (max-width: 767.98px) {
+                .hero-section {
+                    padding: 80px 0 60px;
+                    text-align: center;
+                }
+
+                .name {
+                    font-size: 2.2rem;
+                }
+
+                .description {
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+
+
+                .project-card {
+                    width: 85%;
+                    margin: 0 auto 1.5rem;
+                }
+
+                .carousel-inner img {
+                    height: 300px;
+                }
+
+                .skill-category {
+                    text-align: center;
+                    margin-bottom: 25px;
+                }
+
+                .tool-icons {
+                    justify-content: center;
+                }
+
+                .contact-card {
+                    padding: 30px 20px;
+                }
+
+                .section-heading {
+                    font-size: 2.2rem;
+                }
+            }
+
+            @media (max-width: 575.98px) {
+                .name {
+                    font-size: 1.8rem;
+                }
+
+                .title {
+                    font-size: 1.3rem;
+                }
+
+                .hero-section {
+                    padding: 60px 0 40px;
+                }
+
+
+                .section-heading {
+                    font-size: 2rem;
+                }
+
+                .tool-icons {
+                    gap: 10px;
+                }
+
+                .tool-icon {
+                    width: 65px;
+                    height: 65px;
+                }
+
+                .tool-icon img {
+                    width: 40px;
+                    height: 40px;
+                }
+
+                .skill-category {
+                    padding: 20px;
+                }
+
+                .contact-card {
+                    padding: 25px 15px;
+                }
+            }
+
+            .hero-image-placeholder {
+                width: 100%;
+                max-width: 500px;
+                height: auto;
+                background-color: rgba(0, 55, 149, 0.54);
+                border-radius: 15px;
+                margin-bottom: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--gray-color);
+                font-size: 1.2rem;
+                margin-left: 40px;
+                border: #3a86ff 2px solid;
+            }
+
+            @media (max-width: 991.98px) {
+                .hero-image-placeholder {
+                    margin-left: 0;
+                }
+            }
+
+            @media (max-width: 767.98px) {
+                .hero-image-placeholder {
+                    order: -1;
+                    margin-bottom: 20px;
+                    height: auto;
+                }
+            }
+
+            .certificates-section {
+                padding: 80px 0;
+                background-color: rgba(255, 255, 255, 0.03);;
+            }
+
+            .certificate-slider {
+                scrollbar-width: thin;
+                scrollbar-color: var(--primary-color) rgba(255, 255, 255, 0.1);
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .certificate-slider::-webkit-scrollbar {
+                height: 8px;
+            }
+
+            .certificate-slider::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 10px;
+            }
+
+            .certificate-slider::-webkit-scrollbar-thumb {
+                background-color: var(--primary-color);
+                border-radius: 10px;
+            }
+
+            .certificate-card {
+                width: 320px;
+                background-color: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 12px;
                 padding: 20px;
+                transition: all 0.3s ease;
+                color: var(--text-color);
+                display: flex;
+                flex-direction: column;
             }
 
             .contact-card {
@@ -958,7 +1255,7 @@
         </div>
     </section>
 
-    <!-- Services Section -->
+<!-- Services Section -->
     <section class="services-section" id="about">
         <div class="container">
             <div class="row">
@@ -969,21 +1266,21 @@
             <div class="row">
                 <?php if (!empty($whatIDo)): ?>
                     <?php foreach ($whatIDo as $service): ?>
-                        <div class="col-md-4 mb-4">
-                            <div class="service-card text-center">
+                        <div class="col-md-4 mb-4 d-flex">
+                            <div class="service-card text-center w-100">
                                 <div class="service-icon">
                                     <?php if (!empty($service['icon'])): ?>
-                                        <div class="icon-container">
+                                        <div class="icon-container mx-auto">
                                             <img src="<?= base_url('upload/settings/' . $service['icon']) ?>" alt="<?= $service['title'] ?>">
                                         </div>
                                     <?php else: ?>
-                                        <div class="icon-container">
+                                        <div class="icon-container mx-auto">
                                             <i class="fas fa-code"></i>
                                         </div>
                                     <?php endif; ?>
                                 </div>
-                                <h4><?= $service['title'] ?></h4>
-                                <p><?= $service['description'] ?></p>
+                                <h4 class="text-center"><?= $service['title'] ?></h4>
+                                <p class="text-center"><?= $service['description'] ?></p>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -1017,7 +1314,7 @@
         </div>
     </section>
 
-    <!-- Project Modals -->
+<!-- Project Modals -->
     <?php if (!empty($projects)): ?>
         <?php foreach ($projects as $project): ?>
             <div class="modal fade" id="projectModal<?= $project['id'] ?>" tabindex="-1" aria-labelledby="projectModal<?= $project['id'] ?>Label" aria-hidden="true">
@@ -1066,6 +1363,22 @@
                                     <?php foreach ($project['tags'] as $tag): ?>
                                         <span class="tech-badge"><?= $tag['name'] ?? 'Tech ' . $tag['tag_id'] ?></span>
                                     <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
+
+                            <?php if (!empty($project['github_link']) || !empty($project['demo_link'])): ?>
+                                <h6 class="mt-4 mb-3">Project Links:</h6>
+                                <div class="d-flex gap-2">
+                                    <?php if (!empty($project['github_link'])): ?>
+                                        <a href="<?= $project['github_link'] ?>" target="_blank" class="btn btn-dark">
+                                            <i class="fab fa-github"></i> View on GitHub
+                                        </a>
+                                    <?php endif; ?>
+                                    <?php if (!empty($project['demo_link'])): ?>
+                                        <a href="<?= $project['demo_link'] ?>" target="_blank" class="btn btn-primary">
+                                            <i class="fas fa-external-link-alt"></i> Live Demo
+                                        </a>
+                                    <?php endif; ?>
                                 </div>
                             <?php endif; ?>
                         </div>
@@ -1356,7 +1669,7 @@
             </div>
             <div class="row mt-4">
                 <div class="col-12 text-center">
-                    <p class="text-muted">&copy; 2023 M.E.J.A Ghani. All rights reserved.</p>
+                    <p class="text-muted">&copy; 2025 M.E.J.A Ghani. All rights reserved.</p>
                 </div>
             </div>
         </div>

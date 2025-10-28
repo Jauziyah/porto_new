@@ -77,9 +77,11 @@ class Porto_model extends Model
     // Project Categories
     public function getProjectCategories($projectId)
     {
-        return $this->db->table('project_categories')
-            ->select('project_id, category_id')
-            ->where('project_id', $projectId)
+        return $this->db->table('project_categories pc')
+            ->select('pc.project_id, pc.category_id AS id, c.name, c.slug')
+            ->join('categories c', 'c.id = pc.category_id', 'left')
+            ->where('pc.project_id', $projectId)
+            ->orderBy('c.name', 'asc')
             ->get()->getResultArray();
     }
 
@@ -95,9 +97,11 @@ class Porto_model extends Model
     // Project Tags
     public function getProjectTags($projectId)
     {
-        return $this->db->table('project_tags')
-            ->select('project_id, tag_id')
-            ->where('project_id', $projectId)
+        return $this->db->table('project_tags pt')
+            ->select('pt.project_id, pt.tag_id AS id, t.name, t.slug')
+            ->join('tech_stack t', 't.id = pt.tag_id', 'left')
+            ->where('pt.project_id', $projectId)
+            ->orderBy('t.name', 'asc')
             ->get()->getResultArray();
     }
 
