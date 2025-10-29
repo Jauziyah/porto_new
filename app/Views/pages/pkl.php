@@ -40,12 +40,12 @@
             <label class="form-label text-white-50 small">Image</label>
             <div class="d-flex flex-column gap-2">
               <div class="card profile-card text-light rounded-4 overflow-hidden shadow" style="max-width: 260px;">
-                <div class="image-container d-flex align-items-center justify-content-center" style="height: 140px;">
+                <div class="image-container d-flex align-items-center justify-content-center">
                   <?php if (!empty($p['image_url'])): ?>
-                    <img src="<?= base_url('/upload/pkl/' . $p['image_url']) ?>" alt="pkl image" class="card-image" />
+                    <img src="<?= base_url('/upload/pkl/' . $p['image_url']) ?>" alt="pkl image" class="img-fluid" style="max-height: 400px; width: auto;" />
                     <div class="image-overlay"></div>
                   <?php else: ?>
-                    <div class="placeholder-content" id="pklPlaceholder<?= (int)($p['id'] ?? 0) ?>">
+                    <div class="placeholder-content p-4" id="pklPlaceholder<?= (int)($p['id'] ?? 0) ?>">
                       <i class="fas fa-image fa-2x mb-2 opacity-50"></i>
                       <div class="fw-semibold opacity-75 text-white">No Image</div>
                     </div>
