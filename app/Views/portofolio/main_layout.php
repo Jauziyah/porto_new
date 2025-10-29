@@ -1137,9 +1137,29 @@
   display: none !important;
 }
 
-.skills-section{
-    background-color:  rgba(255, 255, 255, 0.03);;
-}
+        .skills-section{
+            background-color:  rgba(255, 255, 255, 0.03);;
+        }
+
+        .skills-slider {
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) rgba(255, 255, 255, 0.1);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .skills-slider::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .skills-slider::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .skills-slider::-webkit-scrollbar-thumb {
+            background-color: var(--primary-color);
+            border-radius: 10px;
+        }
     </style>
 </head>
 
@@ -1528,19 +1548,20 @@
     <section class="skills-section py-5" id="skills">
         <div class="container">
             <h2 class="section-heading mb-5">Skills and Tools</h2>
-            <div class="row g-4">
-                <?php if (!empty($techStack)): ?>
-                    <?php
-                    // Group tech stack by type
-                    $groupedTechStack = [];
-                    foreach ($techStack as $tech) {
-                        $type = ucfirst($tech['type'] ?? 'Other');
-                        $groupedTechStack[$type][] = $tech;
-                    }
+            
+            <?php if (!empty($techStack)): ?>
+                <?php
+                // Group tech stack by type
+                $groupedTechStack = [];
+                foreach ($techStack as $tech) {
+                    $type = ucfirst($tech['type'] ?? 'Other');
+                    $groupedTechStack[$type][] = $tech;
+                }
+                ?>
 
-                    // Display each type as a separate card
-                    foreach ($groupedTechStack as $type => $items):
-                    ?>
+                <!-- Desktop View - Grid Layout -->
+                <div class="row g-4 d-none d-lg-flex">
+                    <?php foreach ($groupedTechStack as $type => $items): ?>
                         <div class="col-md-6">
                             <div class="skill-category">
                                 <h5 class="skill-title"><?= $type ?></h5>
@@ -1560,16 +1581,38 @@
                             </div>
                         </div>
                     <?php endforeach; ?>
-                <?php else: ?>
-                    <!-- Fallback content when no tech stack data is available -->
-                    <div class="col-12">
-                        <div class="skill-category text-center">
-                            <h5 class="skill-title">Skills and Tools</h5>
-                            <p class="text-muted">No skills and tools data available at the moment.</p>
+                </div>
+
+                <!-- Tablet and Mobile View - Horizontal Slider -->
+                <div class="skills-slider d-flex overflow-auto pb-3 d-lg-none">
+                    <?php foreach ($groupedTechStack as $type => $items): ?>
+                        <div class="skill-category me-4 flex-shrink-0" style="width: 300px;">
+                            <h5 class="skill-title"><?= $type ?></h5>
+                            <div class="tool-icons">
+                                <?php foreach ($items as $item): ?>
+                                    <div class="tool-icon" title="<?= $item['name'] ?>">
+                                        <?php if (!empty($item['image_url'])): ?>
+                                            <img src="<?= base_url('upload/tech_stack/' . $item['image_url']) ?>" alt="<?= $item['name'] ?>">
+                                        <?php else: ?>
+                                            <span style="color: var(--primary-color); font-weight: 600; font-size: 0.9rem;">
+                                                <?= strtoupper(substr($item['name'], 0, 2)) ?>
+                                            </span>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php else: ?>
+                <!-- Fallback content when no tech stack data is available -->
+                <div class="col-12">
+                    <div class="skill-category text-center">
+                        <h5 class="skill-title">Skills and Tools</h5>
+                        <p class="text-muted">No skills and tools data available at the moment.</p>
                     </div>
-                <?php endif; ?>
-            </div>
+                </div>
+            <?php endif; ?>
         </div>
     </section>
 
